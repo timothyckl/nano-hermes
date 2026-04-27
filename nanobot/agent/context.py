@@ -36,6 +36,15 @@ class ContextBuilder:
         """Build the system prompt from identity, bootstrap files, memory, and skills."""
         parts = [self._get_identity(channel=channel)]
 
+        for policy_template in (
+            "agent/enforcement_policy.md",
+            "agent/verification_policy.md",
+            "agent/learning_policy.md",
+        ):
+            policy = render_template(policy_template)
+            if policy:
+                parts.append(policy)
+
         bootstrap = self._load_bootstrap_files()
         if bootstrap:
             parts.append(bootstrap)
