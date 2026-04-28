@@ -82,8 +82,7 @@ dev = [
 ]
 
 [project.scripts]
-nano-hermes = "nanobot.cli.commands:app"
-nanobot = "nanobot.cli.commands:app"
+nano-hermes = "nano_hermes.cli.commands:app"
 
 [build-system]
 requires = ["hatchling"]
@@ -94,21 +93,21 @@ allow-direct-references = true
 
 [tool.hatch.build]
 include = [
-    "nanobot/**/*.py",
-    "nanobot/templates/**/*.md",
-    "nanobot/skills/**/*.md",
-    "nanobot/skills/**/*.sh",
+    "nano_hermes/**/*.py",
+    "nano_hermes/templates/**/*.md",
+    "nano_hermes/skills/**/*.md",
+    "nano_hermes/skills/**/*.sh",
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["nanobot"]
+packages = ["nano_hermes"]
 
 [tool.hatch.build.targets.wheel.sources]
-"nanobot" = "nanobot"
+"nano_hermes" = "nano_hermes"
 
 [tool.hatch.build.targets.sdist]
 include = [
-    "nanobot/",
+    "nano_hermes/",
     "README.md",
     "LICENSE",
     "THIRD_PARTY_NOTICES.md",
@@ -128,7 +127,7 @@ asyncio_mode = "auto"
 testpaths = ["tests"]
 
 [tool.coverage.run]
-source = ["nanobot"]
+source = ["nano_hermes"]
 omit = ["tests/*", "**/tests/*"]
 
 [tool.coverage.report]
