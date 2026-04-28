@@ -45,8 +45,6 @@ Dream is configured under `agents.defaults.dream` in `~/.nano-hermes/config.json
 }
 ```
 
-All options are also available as environment variables with the prefix `NANOHERMES_AGENTS__DEFAULTS__DREAM__` (e.g. `NANOHERMES_AGENTS__DEFAULTS__DREAM__MODEL_OVERRIDE`).
-
 | Option | Default | Description |
 |---|---|---|
 | `modelOverride` | main agent model | Model used for both Dream phases. Useful for routing to a cheaper model. |
