@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import sqlite3
 import uuid
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -28,8 +29,20 @@ class SQLiteMemoryProvider(BaseMemoryProvider):
         conn.row_factory = sqlite3.Row
         return conn
 
+    @contextmanager
+    def _connection(self):
+        conn = self._connect()
+        try:
+            yield conn
+            conn.commit()
+        except BaseException:
+            conn.rollback()
+            raise
+        finally:
+            conn.close()
+
     def _init_db(self) -> None:
-        with self._connect() as db:
+        with self._connection() as db:
             db.executescript("""
             CREATE TABLE IF NOT EXISTS memory_entries (
                 id TEXT PRIMARY KEY,
@@ -59,12 +72,12 @@ class SQLiteMemoryProvider(BaseMemoryProvider):
             """)
 
     def _read_target(self, target: str) -> str:
-        with self._connect() as db:
+        with self._connection() as db:
             rows = db.execute("SELECT content FROM memory_entries WHERE target=? AND deleted_at IS NULL ORDER BY created_at", (target,)).fetchall()
         return "\n".join(f"- {r['content']}" for r in rows)
 
     def _write_target(self, target: str, content: str) -> None:
-        with self._connect() as db:
+        with self._connection() as db:
             now = _now()
             db.execute("UPDATE memory_entries SET deleted_at=?, updated_at=? WHERE target=? AND deleted_at IS NULL", (now, now, target))
             for line in content.splitlines():
@@ -95,11 +108,11 @@ class SQLiteMemoryProvider(BaseMemoryProvider):
         target = {"project": "memory", "agent": "soul", "profile": "user"}.get(target, target)
         if target not in {"user", "soul", "memory"}:
             raise ValueError("invalid target")
-        with self._connect() as db:
+        with self._connection() as db:
             return self._insert_entry(db, target, content.strip(), metadata or {})
 
     def replace_entry(self, target: str, old_text: str, new_text: str) -> None:
-        with self._connect() as db:
+        with self._connection() as db:
             row = db.execute("SELECT id, content FROM memory_entries WHERE target=? AND content LIKE ? AND deleted_at IS NULL LIMIT 1", (target, f"%{old_text}%")).fetchone()
             if not row:
                 raise ValueError("old_text not found")
@@ -110,13 +123,13 @@ class SQLiteMemoryProvider(BaseMemoryProvider):
 
     def remove_entry(self, target: str, old_text: str) -> None:
         now = _now()
-        with self._connect() as db:
+        with self._connection() as db:
             cur = db.execute("UPDATE memory_entries SET deleted_at=?, updated_at=? WHERE target=? AND content LIKE ? AND deleted_at IS NULL", (now, now, target, f"%{old_text}%"))
             if cur.rowcount == 0:
                 raise ValueError("old_text not found")
 
     def search_memory(self, query: str, limit: int = 8) -> list[dict[str, Any]]:
-        with self._connect() as db:
+        with self._connection() as db:
             try:
                 rows = db.execute(
                     "SELECT m.id,m.target,m.content,m.tags,bm25(memory_entries_fts) AS rank FROM memory_entries_fts JOIN memory_entries m USING(id) WHERE memory_entries_fts MATCH ? AND m.deleted_at IS NULL ORDER BY rank LIMIT ?",
@@ -129,7 +142,7 @@ class SQLiteMemoryProvider(BaseMemoryProvider):
     def append_learning_event(self, event: dict[str, Any]) -> str:
         event_id = str(event.get("id") or uuid.uuid4().hex[:12])
         now = _now()
-        with self._connect() as db:
+        with self._connection() as db:
             db.execute(
                 "INSERT INTO learning_events(id,kind,target,content,evidence,confidence,status,created_at,updated_at,reason) VALUES(?,?,?,?,?,?,?,?,?,?)",
                 (event_id, event.get("kind"), event.get("target"), event.get("content"), event.get("evidence"), float(event.get("confidence", 0.0)), event.get("status", "pending"), event.get("created_at", now), now, event.get("reason")),
@@ -139,12 +152,12 @@ class SQLiteMemoryProvider(BaseMemoryProvider):
     def read_learning_events(self, status: str = "pending", limit: int = 50) -> list[dict[str, Any]]:
         sql = "SELECT * FROM learning_events" if status == "all" else "SELECT * FROM learning_events WHERE status=?"
         params: tuple[Any, ...] = () if status == "all" else (status,)
-        with self._connect() as db:
+        with self._connection() as db:
             rows = db.execute(sql + " ORDER BY created_at LIMIT ?", (*params, limit)).fetchall()
         return [dict(r) for r in rows]
 
     def update_learning_event(self, event_id: str, status: str, reason: str | None = None) -> None:
-        with self._connect() as db:
+        with self._connection() as db:
             cur = db.execute("UPDATE learning_events SET status=?, reason=COALESCE(?, reason), updated_at=? WHERE id=?", (status, reason, _now(), event_id))
             if cur.rowcount == 0:
                 raise ValueError("learning event not found")
