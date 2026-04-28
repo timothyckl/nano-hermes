@@ -1,7 +1,7 @@
 [project]
 name = "nanobot-ai"
 version = "0.1.5.post2"
-description = "A lightweight personal AI assistant framework"
+description = "A minimal personal fork of HKUDS/nanobot"
 readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.11"
 license = {text = "MIT"}
@@ -99,6 +99,7 @@ dev = [
     "pytest-cov>=6.0.0,<7.0.0",
     "ruff>=0.1.0",
     "pymupdf>=1.25.0",
+    "build>=1.2.0,<2.0.0",
 ]
 
 [project.scripts]
@@ -125,13 +126,9 @@ packages = ["nanobot"]
 [tool.hatch.build.targets.wheel.sources]
 "nanobot" = "nanobot"
 
-[tool.hatch.build.targets.wheel.force-include]
-"bridge" = "nanobot/bridge"
-
 [tool.hatch.build.targets.sdist]
 include = [
     "nanobot/",
-    "bridge/",
     "README.md",
     "LICENSE",
     "THIRD_PARTY_NOTICES.md",
