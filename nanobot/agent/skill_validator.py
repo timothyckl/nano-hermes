@@ -1,4 +1,4 @@
-"""Validation for nanobot skill packages."""
+"""Validation for Nano Hermes skill packages."""
 from __future__ import annotations
 
 import re

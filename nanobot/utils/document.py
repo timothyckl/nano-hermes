@@ -1,4 +1,4 @@
-"""Document text extraction utilities for nanobot."""
+"""Document text extraction utilities for Nano Hermes."""
 
 import mimetypes
 from pathlib import Path

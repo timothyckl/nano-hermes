@@ -186,7 +186,7 @@ class TestUnifiedSessionConfig:
         assert config.agents.defaults.unified_session is True
 
     def test_onboard_generated_config_contains_unified_session(self, tmp_path: Path):
-        """save_config() writes 'unifiedSession' into config.json (simulates nanobot onboard)."""
+        """save_config() writes 'unifiedSession' into config.json (simulates nano-hermes onboard)."""
         from nanobot.config.loader import save_config
 
         config = Config()

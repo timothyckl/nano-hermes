@@ -1,4 +1,4 @@
-"""OpenAI-compatible HTTP API server for a fixed nanobot session.
+"""OpenAI-compatible HTTP API server for a fixed Nano Hermes session.
 
 Provides /v1/chat/completions and /v1/models endpoints.
 All requests route to a single persistent API session.
@@ -15,6 +15,7 @@ from typing import Any
 from aiohttp import web
 from loguru import logger
 
+from nanobot.branding import APP_NAME
 from nanobot.config.paths import get_media_dir
 from nanobot.utils.helpers import safe_filename
 from nanobot.utils.media_decode import (
@@ -194,7 +195,7 @@ async def handle_chat_completions(request: web.Request) -> web.Response:
 
     agent_loop = request.app["agent_loop"]
     timeout_s: float = request.app.get("request_timeout", 120.0)
-    model_name: str = request.app.get("model_name", "nanobot")
+    model_name: str = request.app.get("model_name", APP_NAME)
 
     stream = False
     try:
@@ -332,7 +333,7 @@ async def handle_chat_completions(request: web.Request) -> web.Response:
 
 async def handle_models(request: web.Request) -> web.Response:
     """GET /v1/models"""
-    model_name = request.app.get("model_name", "nanobot")
+    model_name = request.app.get("model_name", APP_NAME)
     return web.json_response(
         {
             "object": "list",
@@ -341,7 +342,7 @@ async def handle_models(request: web.Request) -> web.Response:
                     "id": model_name,
                     "object": "model",
                     "created": 0,
-                    "owned_by": "nanobot",
+                    "owned_by": APP_NAME,
                 }
             ],
         }
@@ -359,7 +360,7 @@ async def handle_health(request: web.Request) -> web.Response:
 
 
 def create_app(
-    agent_loop, model_name: str = "nanobot", request_timeout: float = 120.0
+    agent_loop, model_name: str = APP_NAME, request_timeout: float = 120.0
 ) -> web.Application:
     """Create the aiohttp application.
 

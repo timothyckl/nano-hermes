@@ -1,4 +1,4 @@
-"""WebSocket server channel: nanobot acts as a WebSocket server and serves connected clients."""
+"""WebSocket server channel: Nano Hermes acts as a WebSocket server and serves connected clients."""
 
 from __future__ import annotations
 
@@ -72,7 +72,7 @@ class WebSocketConfig(Base):
     - ``token_issue_path``: If non-empty, **GET** (HTTP/1.1) to this path returns JSON
       ``{"token": "...", "expires_in": <seconds>}``; use ``?token=...`` when opening the WebSocket.
       Must differ from ``path`` (the WS upgrade path). If the client runs in the **same process** as
-      nanobot and shares the asyncio loop, use a thread or async HTTP client for GET—do not call
+      Nano Hermes and shares the asyncio loop, use a thread or async HTTP client for GET—do not call
       blocking ``urllib`` or synchronous ``httpx`` from inside a coroutine.
     - ``token_issue_secret``: If non-empty, token requests must send ``Authorization: Bearer <secret>`` or
       ``X-Nanobot-Auth: <secret>``.
@@ -373,7 +373,12 @@ def _issue_route_secret_matches(headers: Any, configured_secret: str) -> bool:
     if authorization and authorization.lower().startswith("bearer "):
         supplied = authorization[7:].strip()
         return hmac.compare_digest(supplied, configured_secret)
-    header_token = headers.get("X-Nanobot-Auth") or headers.get("x-nanobot-auth")
+    header_token = (
+        headers.get("X-Nano-Hermes-Auth")
+        or headers.get("x-nano-hermes-auth")
+        or headers.get("X-Nanobot-Auth")
+        or headers.get("x-nanobot-auth")
+    )
     if not header_token:
         return False
     return hmac.compare_digest(header_token.strip(), configured_secret)

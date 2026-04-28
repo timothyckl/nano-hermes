@@ -14,7 +14,7 @@ from rich.live import Live
 from rich.markdown import Markdown
 from rich.text import Text
 
-from nanobot import __logo__
+from nanobot import __app_display_name__, __logo__
 
 
 def _make_console() -> Console:
@@ -32,11 +32,11 @@ def _make_console() -> Console:
 
 
 class ThinkingSpinner:
-    """Spinner that shows 'nanobot is thinking...' with pause support."""
+    """Spinner that shows Nano Hermes thinking status with pause support."""
 
     def __init__(self, console: Console | None = None):
         c = console or _make_console()
-        self._spinner = c.status("[dim]nanobot is thinking...[/dim]", spinner="dots")
+        self._spinner = c.status(f"[dim]{__app_display_name__} is thinking...[/dim]", spinner="dots")
         self._active = False
 
     def __enter__(self):
@@ -108,7 +108,7 @@ class StreamRenderer:
             self._stop_spinner()
             c = _make_console()
             c.print()
-            c.print(f"[cyan]{__logo__} nanobot[/cyan]")
+            c.print(f"[cyan]{__logo__} {__app_display_name__}[/cyan]")
             self._live = Live(self._render(), console=c, auto_refresh=False)
             self._live.start()
         now = time.monotonic()

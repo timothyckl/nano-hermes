@@ -1,4 +1,4 @@
-"""Utility functions for nanobot."""
+"""Utility functions for Nano Hermes."""
 
 import base64
 import json
@@ -8,6 +8,8 @@ import time
 import uuid
 from datetime import datetime
 from pathlib import Path
+
+from nanobot.branding import APP_DISPLAY_NAME, APP_NAME, LOGO
 from typing import Any
 
 import tiktoken
@@ -117,7 +119,7 @@ def current_time_str(timezone: str | None = None) -> str:
 
 _UNSAFE_CHARS = re.compile(r'[<>:"/\\|?*]')
 _TOOL_RESULT_PREVIEW_CHARS = 1200
-_TOOL_RESULTS_DIR = ".nanobot/tool-results"
+_TOOL_RESULTS_DIR = ".nano-hermes/tool-results"
 _TOOL_RESULT_RETENTION_SECS = 7 * 24 * 60 * 60
 _TOOL_RESULT_MAX_BUCKETS = 32
 
@@ -472,7 +474,7 @@ def build_status_content(
     if cached and last_in:
         token_line += f" ({cached * 100 // last_in}% cached)"
     lines = [
-        f"\U0001f408 nanobot v{version}",
+        f"{LOGO} {APP_DISPLAY_NAME} ({APP_NAME}) v{version}",
         f"\U0001f9e0 Model: {model}",
         token_line,
         f"\U0001f4da Context: {ctx_used_str}/{ctx_total_str} ({ctx_pct}% of input budget)",

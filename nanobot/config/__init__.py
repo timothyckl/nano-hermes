@@ -1,4 +1,4 @@
-"""Configuration module for nanobot."""
+"""Configuration module for Nano Hermes."""
 
 from nanobot.config.loader import get_config_path, load_config
 from nanobot.config.paths import (

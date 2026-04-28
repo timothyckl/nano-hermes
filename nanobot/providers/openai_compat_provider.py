@@ -31,6 +31,7 @@ else:
         )
     from openai import AsyncOpenAI
 
+from nanobot.branding import APP_DISPLAY_NAME, REPOSITORY_URL
 from nanobot.providers.base import LLMProvider, LLMResponse, ToolCallRequest
 from nanobot.providers.openai_responses import (
     consume_sdk_stream,
@@ -51,8 +52,8 @@ _ALNUM = string.ascii_letters + string.digits
 _STANDARD_TC_KEYS = frozenset({"id", "type", "index", "function"})
 _STANDARD_FN_KEYS = frozenset({"name", "arguments"})
 _DEFAULT_OPENROUTER_HEADERS = {
-    "HTTP-Referer": "https://github.com/HKUDS/nanobot",
-    "X-OpenRouter-Title": "nanobot",
+    "HTTP-Referer": REPOSITORY_URL,
+    "X-OpenRouter-Title": APP_DISPLAY_NAME,
     "X-OpenRouter-Categories": "cli-agent,personal-agent",
 }
 _KIMI_THINKING_MODELS: frozenset[str] = frozenset({

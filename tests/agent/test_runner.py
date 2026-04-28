@@ -351,13 +351,13 @@ async def test_runner_persists_large_tool_results_for_follow_up_calls(tmp_path):
     tool_message = next(msg for msg in captured_second_call if msg.get("role") == "tool")
     assert "[tool output persisted]" in tool_message["content"]
     assert "tool-results" in tool_message["content"]
-    assert (tmp_path / ".nanobot" / "tool-results" / "test_runner" / "call_big.txt").exists()
+    assert (tmp_path / ".nano-hermes" / "tool-results" / "test_runner" / "call_big.txt").exists()
 
 
 def test_persist_tool_result_prunes_old_session_buckets(tmp_path):
     from nanobot.utils.helpers import maybe_persist_tool_result
 
-    root = tmp_path / ".nanobot" / "tool-results"
+    root = tmp_path / ".nano-hermes" / "tool-results"
     old_bucket = root / "old_session"
     recent_bucket = root / "recent_session"
     old_bucket.mkdir(parents=True)
@@ -386,7 +386,7 @@ def test_persist_tool_result_prunes_old_session_buckets(tmp_path):
 def test_persist_tool_result_leaves_no_temp_files(tmp_path):
     from nanobot.utils.helpers import maybe_persist_tool_result
 
-    root = tmp_path / ".nanobot" / "tool-results"
+    root = tmp_path / ".nano-hermes" / "tool-results"
     maybe_persist_tool_result(
         tmp_path,
         "current:session",
@@ -2846,7 +2846,7 @@ def test_snip_history_preserves_user_message_after_truncation(monkeypatch):
     messages = [
         {"role": "system", "content": "system"},
         {"role": "assistant", "content": "previous reply"},
-        {"role": "user", "content": ".nanobot的同目录"},
+        {"role": "user", "content": ".nano-hermes的同目录"},
         {
             "role": "assistant",
             "content": None,
@@ -2877,7 +2877,7 @@ def test_snip_history_preserves_user_message_after_truncation(monkeypatch):
     token_sizes = {
         "system": 0,
         "previous reply": 200,
-        ".nanobot的同目录": 80,
+        ".nano-hermes的同目录": 80,
         "tool output 1": 80,
         "tool output 2": 80,
     }

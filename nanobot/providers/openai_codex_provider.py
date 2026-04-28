@@ -20,7 +20,7 @@ from nanobot.providers.openai_responses import (
 )
 
 DEFAULT_CODEX_URL = "https://chatgpt.com/backend-api/codex/responses"
-DEFAULT_ORIGINATOR = "nanobot"
+DEFAULT_ORIGINATOR = "nano-hermes"
 
 
 class OpenAICodexProvider(LLMProvider):
@@ -118,7 +118,7 @@ def _build_headers(account_id: str, token: str) -> dict[str, str]:
         "chatgpt-account-id": account_id,
         "OpenAI-Beta": "responses=experimental",
         "originator": DEFAULT_ORIGINATOR,
-        "User-Agent": "nanobot (python)",
+        "User-Agent": "nano-hermes (python)",
         "accept": "text/event-stream",
         "content-type": "application/json",
     }

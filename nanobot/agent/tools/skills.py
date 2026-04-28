@@ -37,7 +37,7 @@ class SkillsTool(Tool):
 
     @property
     def description(self) -> str:
-        return "List, search, view, create, patch, and validate nanobot skills."
+        return "List, search, view, create, patch, and validate Nano Hermes skills."
 
     def _skill_dir(self, name: str) -> Path:
         if not name or "/" in name or ".." in name:

@@ -1,4 +1,4 @@
-"""Interactive onboarding questionnaire for nanobot."""
+"""Interactive onboarding questionnaire for Nano Hermes."""
 
 import json
 import types
@@ -363,14 +363,14 @@ def _show_config_panel(display_name: str, model: BaseModel, fields: list) -> Non
 
 def _show_main_menu_header() -> None:
     """Display the main menu header."""
-    from nanobot import __logo__, __version__
+    from nanobot import __app_display_name__, __logo__, __version__
 
     console.print()
     # Use Align.CENTER for the single line of text
     from rich.align import Align
 
     console.print(
-        Align.center(f"{__logo__} [bold cyan]nanobot[{__version__}][/bold cyan]")
+        Align.center(f"{__logo__} [bold cyan]{__app_display_name__} [{__version__}][/bold cyan]")
     )
     console.print()
 

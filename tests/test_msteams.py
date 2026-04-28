@@ -11,7 +11,7 @@ except ImportError:
     MSTEAMS_AVAILABLE = False
 
 if not MSTEAMS_AVAILABLE:
-    pytest.skip("MSTeams dependencies not installed (PyJWT, cryptography). Run: pip install nanobot-ai[msteams]", allow_module_level=True)
+    pytest.skip("MSTeams dependencies not installed (PyJWT, cryptography). Run: pip install nano-hermes[msteams]", allow_module_level=True)
 
 import jwt
 from cryptography.hazmat.primitives.asymmetric import rsa
@@ -95,7 +95,7 @@ async def test_handle_activity_personal_message_publishes_and_stores_ref(make_ch
         },
         "recipient": {
             "id": "28:bot-id",
-            "name": "nanobot",
+            "name": "Nano Hermes",
         },
         "channelData": {
             "tenant": {"id": "tenant-id"},
@@ -390,7 +390,7 @@ async def test_handle_activity_ignores_group_messages(make_channel):
         },
         "recipient": {
             "id": "28:bot-id",
-            "name": "nanobot",
+            "name": "Nano Hermes",
         },
     }
 
@@ -420,7 +420,7 @@ async def test_handle_activity_denied_sender_does_not_store_ref(make_channel, tm
         },
         "recipient": {
             "id": "28:bot-id",
-            "name": "nanobot",
+            "name": "Nano Hermes",
         },
         "channelData": {
             "tenant": {"id": "tenant-id"},
@@ -454,7 +454,7 @@ async def test_handle_activity_mention_only_uses_default_response(make_channel):
         },
         "recipient": {
             "id": "28:bot-id",
-            "name": "nanobot",
+            "name": "Nano Hermes",
         },
     }
 
@@ -485,7 +485,7 @@ async def test_handle_activity_mention_only_ignores_when_response_disabled(make_
         },
         "recipient": {
             "id": "28:bot-id",
-            "name": "nanobot",
+            "name": "Nano Hermes",
         },
     }
 
@@ -839,7 +839,7 @@ async def test_start_logs_install_hint_when_pyjwt_missing(make_channel, monkeypa
 
     await ch.start()
 
-    assert errors == ["PyJWT not installed. Run: pip install nanobot-ai[msteams]"]
+    assert errors == ["PyJWT not installed. Run: pip install nano-hermes[msteams]"]
 
 
 def test_save_refs_prunes_webchat_and_stale_refs(make_channel):

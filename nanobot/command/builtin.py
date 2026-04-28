@@ -7,6 +7,7 @@ import os
 import sys
 
 from nanobot import __version__
+from nanobot.branding import APP_DISPLAY_NAME, LOGO
 from nanobot.bus.events import OutboundMessage
 from nanobot.command.router import CommandContext, CommandRouter
 from nanobot.utils.helpers import build_status_content
@@ -383,7 +384,7 @@ async def cmd_help(ctx: CommandContext) -> OutboundMessage:
 def build_help_text() -> str:
     """Build canonical help text shared across channels."""
     lines = [
-        "🐈 nanobot commands:",
+        f"{LOGO} {APP_DISPLAY_NAME} commands:",
         "/new — Stop current task and start a new conversation",
         "/stop — Stop the current task",
         "/restart — Restart the bot",

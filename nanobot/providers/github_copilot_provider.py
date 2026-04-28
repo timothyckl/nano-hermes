@@ -20,8 +20,8 @@ DEFAULT_COPILOT_BASE_URL = "https://api.githubcopilot.com"
 GITHUB_COPILOT_CLIENT_ID = "Iv1.b507a08c87ecfe98"
 GITHUB_COPILOT_SCOPE = "read:user"
 TOKEN_FILENAME = "github-copilot.json"
-TOKEN_APP_NAME = "nanobot"
-USER_AGENT = "nanobot/0.1"
+TOKEN_APP_NAME = "nano-hermes"
+USER_AGENT = "nano-hermes/0.1"
 EDITOR_VERSION = "vscode/1.99.0"
 EDITOR_PLUGIN_VERSION = "copilot-chat/0.26.0"
 _EXPIRY_SKEW_SECONDS = 60
@@ -182,7 +182,7 @@ class GitHubCopilotProvider(OpenAICompatProvider):
 
         github_token = _load_github_token()
         if not github_token or not github_token.access:
-            raise RuntimeError("GitHub Copilot is not logged in. Run: nanobot provider login github-copilot")
+            raise RuntimeError("GitHub Copilot is not logged in. Run: nano-hermes provider login github-copilot")
 
         timeout = httpx.Timeout(20.0, connect=20.0)
         async with httpx.AsyncClient(timeout=timeout, follow_redirects=True, trust_env=True) as client:

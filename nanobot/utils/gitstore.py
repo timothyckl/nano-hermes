@@ -106,9 +106,9 @@ class GitStore:
             porcelain.add(str(self._workspace), paths=[".gitignore"] + self._tracked_files)
             porcelain.commit(
                 str(self._workspace),
-                message=b"init: nanobot memory store",
-                author=b"nanobot <nanobot@dream>",
-                committer=b"nanobot <nanobot@dream>",
+                message=b"init: nano-hermes memory store",
+                author=b"nano-hermes <nano-hermes@dream>",
+                committer=b"nano-hermes <nano-hermes@dream>",
             )
             logger.info("Git store initialized at {}", self._workspace)
             return True
@@ -140,8 +140,8 @@ class GitStore:
             sha_bytes = porcelain.commit(
                 str(self._workspace),
                 message=msg_bytes,
-                author=b"nanobot <nanobot@dream>",
-                committer=b"nanobot <nanobot@dream>",
+                author=b"nano-hermes <nano-hermes@dream>",
+                committer=b"nano-hermes <nano-hermes@dream>",
             )
             if sha_bytes is None:
                 return None

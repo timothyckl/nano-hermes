@@ -234,7 +234,7 @@ if DISCORD_AVAILABLE:
                 )
 
         async def send_outbound(self, msg: OutboundMessage) -> None:
-            """Send a nanobot outbound message using Discord transport rules."""
+            """Send a Nano Hermes outbound message using Discord transport rules."""
             channel_id = int(msg.chat_id)
 
             channel = self._channel._known_channels.get(msg.chat_id) or self.get_channel(channel_id)
@@ -384,7 +384,7 @@ class DiscordChannel(BaseChannel):
     async def start(self) -> None:
         """Start the Discord client."""
         if not DISCORD_AVAILABLE:
-            logger.error("discord.py not installed. Run: pip install nanobot-ai[discord]")
+            logger.error("discord.py not installed. Run: pip install nano-hermes[discord]")
             return
 
         if not self.config.token:

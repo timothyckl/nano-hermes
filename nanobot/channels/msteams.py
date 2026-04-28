@@ -134,7 +134,7 @@ class MSTeamsChannel(BaseChannel):
     async def start(self) -> None:
         """Start the Teams webhook listener."""
         if not MSTEAMS_AVAILABLE:
-            logger.error("PyJWT not installed. Run: pip install nanobot-ai[msteams]")
+            logger.error("PyJWT not installed. Run: pip install nano-hermes[msteams]")
             return
 
         if not self.config.app_id or not self.config.app_password:
@@ -206,7 +206,7 @@ class MSTeamsChannel(BaseChannel):
         self._server = ThreadingHTTPServer((self.config.host, self.config.port), Handler)
         self._server_thread = threading.Thread(
             target=self._server.serve_forever,
-            name="nanobot-msteams",
+            name="nano-hermes-msteams",
             daemon=True,
         )
         self._server_thread.start()
@@ -438,7 +438,7 @@ class MSTeamsChannel(BaseChannel):
     async def _validate_inbound_auth(self, auth_header: str, activity: dict[str, Any]) -> None:
         """Validate inbound Bot Framework bearer token."""
         if not MSTEAMS_AVAILABLE:
-            raise RuntimeError("PyJWT not installed. Run: pip install nanobot-ai[msteams]")
+            raise RuntimeError("PyJWT not installed. Run: pip install nano-hermes[msteams]")
 
         if not auth_header.lower().startswith("bearer "):
             raise ValueError("missing bearer token")

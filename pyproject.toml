@@ -1,14 +1,14 @@
 [project]
-name = "nanobot-ai"
+name = "nano-hermes"
 version = "0.1.5.post2"
-description = "A minimal personal fork of HKUDS/nanobot"
+description = "A minimal personal AI assistant forked from HKUDS/nanobot"
 readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.11"
 license = {text = "MIT"}
 authors = [
-    {name = "nanobot contributors"}
+    {name = "Nano Hermes contributors"}
 ]
-keywords = ["ai", "agent", "chatbot"]
+keywords = ["ai", "agent", "assistant", "nano-hermes"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -103,6 +103,7 @@ dev = [
 ]
 
 [project.scripts]
+nano-hermes = "nanobot.cli.commands:app"
 nanobot = "nanobot.cli.commands:app"
 
 [build-system]

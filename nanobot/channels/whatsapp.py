@@ -338,7 +338,7 @@ def _ensure_bridge_setup() -> Path:
     if not source:
         raise RuntimeError(
             "WhatsApp bridge source not found. "
-            "Try reinstalling: pip install --force-reinstall nanobot"
+            "Try reinstalling: pip install --force-reinstall nano-hermes"
         )
 
     logger.info("Setting up WhatsApp bridge...")

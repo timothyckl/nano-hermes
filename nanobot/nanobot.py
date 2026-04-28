@@ -1,4 +1,4 @@
-"""High-level programmatic interface to nanobot."""
+"""High-level programmatic interface to Nano Hermes."""
 
 from __future__ import annotations
 
@@ -21,7 +21,7 @@ class RunResult:
 
 
 class Nanobot:
-    """Programmatic facade for running the nanobot agent.
+    """Programmatic facade for running the Nano Hermes agent.
 
     Usage::
 
@@ -44,7 +44,7 @@ class Nanobot:
 
         Args:
             config_path: Path to ``config.json``.  Defaults to
-                ``~/.nanobot/config.json``.
+                ``~/.nano-hermes/config.json``.
             workspace: Override the workspace directory from config.
         """
         from nanobot.config.loader import load_config, resolve_config_env_vars
