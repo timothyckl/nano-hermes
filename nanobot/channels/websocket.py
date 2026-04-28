@@ -648,7 +648,7 @@ class WebSocketChannel(BaseChannel):
             return _http_error(503, "session manager unavailable")
         sessions = self._session_manager.list_sessions()
         # The webui is only meaningful for websocket-channel chats — CLI /
-        # Slack / Lark / Discord sessions can't be resumed from the browser,
+        # Discord sessions can't be resumed from the browser,
         # so leaking them into the sidebar is just noise. Filter to the
         # ``websocket:`` prefix and strip absolute paths on the way out.
         cleaned = [
@@ -742,7 +742,7 @@ class WebSocketChannel(BaseChannel):
             return _http_error(400, "invalid session key")
         # The embedded webui only understands websocket-channel sessions. Keep
         # its read surface aligned with ``/api/sessions`` instead of letting a
-        # caller probe arbitrary CLI / Slack / Lark history by handcrafted URL.
+        # caller probe arbitrary CLI / Discord history by handcrafted URL.
         if not self._is_webui_session_key(decoded_key):
             return _http_error(404, "session not found")
         data = self._session_manager.read_session_file(decoded_key)

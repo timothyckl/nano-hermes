@@ -73,18 +73,18 @@ async def test_loop_hook_preserves_metadata_when_resetting_tool_context(tmp_path
     cron = _ContextRecordingTool()
     loop.tools = _Tools(cron)
 
-    metadata = {"slack": {"thread_ts": "111.222", "channel_type": "channel"}}
+    metadata = {"discord": {"thread_ts": "111.222", "channel_type": "channel"}}
     await loop._run_agent_loop(
         [],
-        channel="slack",
+        channel="discord",
         chat_id="C123",
         metadata=metadata,
-        session_key="slack:C123:111.222",
+        session_key="discord:C123:111.222",
     )
 
     assert cron.contexts[-1] == {
-        "channel": "slack",
+        "channel": "discord",
         "chat_id": "C123",
         "metadata": metadata,
-        "session_key": "slack:C123:111.222",
+        "session_key": "discord:C123:111.222",
     }

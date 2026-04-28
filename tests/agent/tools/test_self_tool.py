@@ -1120,6 +1120,6 @@ class TestSetContext:
 
     def test_set_context_stores_channel_and_chat_id(self):
         tool = _make_tool()
-        tool.set_context("feishu", "oc_abc123")
-        assert tool._channel == "feishu"
+        tool.set_context("telegram", "oc_abc123")
+        assert tool._channel == "telegram"
         assert tool._chat_id == "oc_abc123"

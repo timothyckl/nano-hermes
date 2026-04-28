@@ -45,24 +45,24 @@ def test_add_job_accepts_valid_timezone(tmp_path) -> None:
 
 def test_add_job_preserves_channel_meta_and_session_key(tmp_path) -> None:
     service = CronService(tmp_path / "cron" / "jobs.json")
-    meta = {"slack": {"thread_ts": "1234567890.123456", "channel_type": "channel"}}
+    meta = {"discord": {"thread_ts": "1234567890.123456", "channel_type": "channel"}}
     job = service.add_job(
         name="thread test",
         schedule=CronSchedule(kind="every", every_ms=60_000),
         message="hello",
         deliver=True,
-        channel="slack",
+        channel="discord",
         to="C123",
         channel_meta=meta,
-        session_key="slack:C123:1234567890.123456",
+        session_key="discord:C123:1234567890.123456",
     )
     assert job.payload.channel_meta == meta
-    assert job.payload.session_key == "slack:C123:1234567890.123456"
+    assert job.payload.session_key == "discord:C123:1234567890.123456"
 
     reloaded = service.get_job(job.id)
     assert reloaded is not None
     assert reloaded.payload.channel_meta == meta
-    assert reloaded.payload.session_key == "slack:C123:1234567890.123456"
+    assert reloaded.payload.session_key == "discord:C123:1234567890.123456"
 
 
 @pytest.mark.asyncio
@@ -70,17 +70,17 @@ async def test_channel_meta_and_session_key_survive_store_reload(tmp_path) -> No
     store_path = tmp_path / "cron" / "jobs.json"
     service = CronService(store_path)
     await service.start()
-    meta = {"slack": {"thread_ts": "1234567890.123456", "channel_type": "channel"}}
+    meta = {"discord": {"thread_ts": "1234567890.123456", "channel_type": "channel"}}
     try:
         job = service.add_job(
             name="thread test",
             schedule=CronSchedule(kind="every", every_ms=60_000),
             message="hello",
             deliver=True,
-            channel="slack",
+            channel="discord",
             to="C123",
             channel_meta=meta,
-            session_key="slack:C123:1234567890.123456",
+            session_key="discord:C123:1234567890.123456",
         )
     finally:
         service.stop()
@@ -88,12 +88,12 @@ async def test_channel_meta_and_session_key_survive_store_reload(tmp_path) -> No
     raw = json.loads(store_path.read_text(encoding="utf-8"))
     payload = raw["jobs"][0]["payload"]
     assert payload["channelMeta"] == meta
-    assert payload["sessionKey"] == "slack:C123:1234567890.123456"
+    assert payload["sessionKey"] == "discord:C123:1234567890.123456"
 
     reloaded = CronService(store_path).get_job(job.id)
     assert reloaded is not None
     assert reloaded.payload.channel_meta == meta
-    assert reloaded.payload.session_key == "slack:C123:1234567890.123456"
+    assert reloaded.payload.session_key == "discord:C123:1234567890.123456"
 
 
 @pytest.mark.asyncio

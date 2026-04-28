@@ -137,13 +137,13 @@ async def test_sessions_routes_require_bearer_token(
 async def test_sessions_list_only_returns_websocket_sessions_by_default(
     bus: MagicMock, tmp_path: Path
 ) -> None:
-    # Seed a realistic multi-channel disk state: CLI, Slack, Lark and
+    # Seed a realistic multi-channel disk state: CLI, Discord, Lark and
     # websocket sessions all live in the same ``sessions/`` directory.
     sm = _seed_many(
         tmp_path,
         [
             "cli:direct",
-            "slack:C123",
+            "discord:C123",
             "lark:oc_abc",
             "websocket:alpha",
             "websocket:beta",
@@ -163,7 +163,7 @@ async def test_sessions_list_only_returns_websocket_sessions_by_default(
         assert listing.status_code == 200
         keys = {s["key"] for s in listing.json()["sessions"]}
         # Only websocket-channel sessions are part of the webui surface; CLI /
-        # Slack / Lark rows would be non-resumable from the browser.
+        # Discord / Lark rows would be non-resumable from the browser.
         assert keys == {"websocket:alpha", "websocket:beta"}
     finally:
         await channel.stop()
@@ -238,7 +238,7 @@ async def test_session_routes_reject_non_websocket_keys(
         [
             "websocket:kept",
             "cli:direct",
-            "slack:C123",
+            "discord:C123",
         ],
     )
     channel = _ch(bus, session_manager=sm, port=29909)
@@ -257,10 +257,10 @@ async def test_session_routes_reject_non_websocket_keys(
         )
         assert msgs.status_code == 404
 
-        doomed = sm._get_session_path("slack:C123")
+        doomed = sm._get_session_path("discord:C123")
         assert doomed.exists()
         deny_delete = await _http_get(
-            "http://127.0.0.1:29909/api/sessions/slack:C123/delete",
+            "http://127.0.0.1:29909/api/sessions/discord:C123/delete",
             headers=auth,
         )
         assert deny_delete.status_code == 404

@@ -217,14 +217,14 @@ def test_channel_format_hint_telegram(tmp_path) -> None:
     assert "messaging app" in prompt
 
 
-def test_channel_format_hint_whatsapp(tmp_path) -> None:
-    """WhatsApp should get plain-text format hint."""
+def test_channel_format_hint_email(tmp_path) -> None:
+    """Email should get simple-structure format hint."""
     workspace = _make_workspace(tmp_path)
     builder = ContextBuilder(workspace)
 
-    prompt = builder.build_system_prompt(channel="whatsapp")
+    prompt = builder.build_system_prompt(channel="email")
     assert "Format Hint" in prompt
-    assert "plain text only" in prompt
+    assert "via email" in prompt
 
 
 def test_channel_format_hint_absent_for_unknown(tmp_path) -> None:
@@ -235,7 +235,7 @@ def test_channel_format_hint_absent_for_unknown(tmp_path) -> None:
     prompt = builder.build_system_prompt(channel=None)
     assert "Format Hint" not in prompt
 
-    prompt2 = builder.build_system_prompt(channel="feishu")
+    prompt2 = builder.build_system_prompt(channel="unknown-chat")
     assert "Format Hint" not in prompt2
 
 

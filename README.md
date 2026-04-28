@@ -2,7 +2,7 @@
 
 A minimal personal AI assistant forked from [HKUDS/nanobot](https://github.com/HKUDS/nanobot).
 
-This repository keeps the Python agent runtime, CLI, tests, templates, and built-in skills, while removing upstream marketing assets, web UI sources, Docker deployment files, long-form docs, issue templates, and the bundled WhatsApp TypeScript bridge.
+This repository keeps the Python agent runtime, CLI, tests, templates, built-in skills, and a small set of personal channels, while removing upstream marketing assets, web UI sources, Docker deployment files, long-form docs, issue templates, bundled bridge code, and unused chat integrations.
 
 ## What is included
 
@@ -19,9 +19,9 @@ This repository keeps the Python agent runtime, CLI, tests, templates, and built
 - GitHub issue templates and community files
 - Dockerfile / docker-compose deployment setup
 - React/Vite Web UI source tree
-- Bundled WhatsApp Node/TypeScript bridge
+- Bundled bridge code and unused chat integrations
 
-The code still contains some optional channel/provider integrations from upstream. They can be pruned later if this fork settles on a smaller supported surface.
+The channel surface is intentionally limited to Matrix, Telegram, Email, Discord, and WebSocket.
 
 ## Requirements
 
@@ -109,8 +109,6 @@ python -m build
 This is a personal project, not a full downstream distribution of upstream nanobot. Prefer small, practical documentation in this README over restoring the deleted upstream docs and marketing assets.
 
 The Python import package currently remains `nanobot` to reduce merge friction with upstream. Public-facing packaging and CLI usage are branded as Nano Hermes; a legacy `nanobot` console alias is retained for compatibility.
-
-If WhatsApp support is needed again, restore or replace the removed `bridge/` implementation before enabling the WhatsApp channel login flow.
 
 ## License
 

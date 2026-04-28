@@ -49,12 +49,12 @@ def test_save_turn_keeps_image_placeholder_with_path_after_runtime_strip() -> No
             "role": "user",
             "content": [
                 {"type": "text", "text": runtime},
-                {"type": "image_url", "image_url": {"url": "data:image/png;base64,abc"}, "_meta": {"path": "/media/feishu/photo.jpg"}},
+                {"type": "image_url", "image_url": {"url": "data:image/png;base64,abc"}, "_meta": {"path": "/media/telegram/photo.jpg"}},
             ],
         }],
         skip=0,
     )
-    assert session.messages[0]["content"] == [{"type": "text", "text": "[image: /media/feishu/photo.jpg]"}]
+    assert session.messages[0]["content"] == [{"type": "text", "text": "[image: /media/telegram/photo.jpg]"}]
 
 
 def test_save_turn_keeps_image_placeholder_without_meta() -> None:
@@ -222,12 +222,12 @@ async def test_process_message_persists_user_message_before_turn_completes(tmp_p
     loop.consolidator.maybe_consolidate_by_tokens = AsyncMock(return_value=False)  # type: ignore[method-assign]
     loop._run_agent_loop = AsyncMock(side_effect=RuntimeError("boom"))  # type: ignore[method-assign]
 
-    msg = InboundMessage(channel="feishu", sender_id="u1", chat_id="c1", content="persist me")
+    msg = InboundMessage(channel="telegram", sender_id="u1", chat_id="c1", content="persist me")
     with pytest.raises(RuntimeError, match="boom"):
         await loop._process_message(msg)
 
-    loop.sessions.invalidate("feishu:c1")
-    persisted = loop.sessions.get_or_create("feishu:c1")
+    loop.sessions.invalidate("telegram:c1")
+    persisted = loop.sessions.get_or_create("telegram:c1")
     assert [m["role"] for m in persisted.messages] == ["user"]
     assert persisted.messages[0]["content"] == "persist me"
     assert persisted.metadata.get(AgentLoop._PENDING_USER_TURN_KEY) is True
@@ -332,12 +332,12 @@ async def test_process_message_does_not_duplicate_early_persisted_user_message(t
     ))  # type: ignore[method-assign]
 
     result = await loop._process_message(
-        InboundMessage(channel="feishu", sender_id="u1", chat_id="c2", content="hello")
+        InboundMessage(channel="telegram", sender_id="u1", chat_id="c2", content="hello")
     )
 
     assert result is not None
     assert result.content == "done"
-    session = loop.sessions.get_or_create("feishu:c2")
+    session = loop.sessions.get_or_create("telegram:c2")
     assert [
         {k: v for k, v in m.items() if k in {"role", "content"}}
         for m in session.messages
@@ -409,7 +409,7 @@ async def test_next_turn_after_crash_closes_pending_user_turn_before_new_input(t
     loop.consolidator.maybe_consolidate_by_tokens = AsyncMock(return_value=False)  # type: ignore[method-assign]
     loop.provider.chat_with_retry = AsyncMock(return_value=MagicMock())  # unused because _run_agent_loop is stubbed
 
-    session = loop.sessions.get_or_create("feishu:c3")
+    session = loop.sessions.get_or_create("telegram:c3")
     session.add_message("user", "old question")
     session.metadata[AgentLoop._PENDING_USER_TURN_KEY] = True
     loop.sessions.save(session)
@@ -429,12 +429,12 @@ async def test_next_turn_after_crash_closes_pending_user_turn_before_new_input(t
     ))  # type: ignore[method-assign]
 
     result = await loop._process_message(
-        InboundMessage(channel="feishu", sender_id="u1", chat_id="c3", content="new question")
+        InboundMessage(channel="telegram", sender_id="u1", chat_id="c3", content="new question")
     )
 
     assert result is not None
     assert result.content == "new answer"
-    session = loop.sessions.get_or_create("feishu:c3")
+    session = loop.sessions.get_or_create("telegram:c3")
     assert [
         {k: v for k, v in m.items() if k in {"role", "content"}}
         for m in session.messages
@@ -500,20 +500,20 @@ async def test_stop_preserves_runtime_checkpoint_for_next_turn(tmp_path: Path) -
 
     loop._run_agent_loop = interrupted_run_agent_loop  # type: ignore[method-assign]
 
-    first_msg = InboundMessage(channel="feishu", sender_id="u1", chat_id="c4", content="keep progress")
+    first_msg = InboundMessage(channel="telegram", sender_id="u1", chat_id="c4", content="keep progress")
     task = asyncio.create_task(loop._process_message(first_msg))
     loop._active_tasks[first_msg.session_key] = [task]
     await asyncio.wait_for(checkpoint_saved.wait(), timeout=1.0)
 
-    stop_msg = InboundMessage(channel="feishu", sender_id="u1", chat_id="c4", content="/stop")
+    stop_msg = InboundMessage(channel="telegram", sender_id="u1", chat_id="c4", content="/stop")
     stop_ctx = CommandContext(msg=stop_msg, session=None, key=stop_msg.session_key, raw="/stop", loop=loop)
     stop_result = await cmd_stop(stop_ctx)
 
     assert "Stopped 1 task" in stop_result.content
     assert task.done()
 
-    loop.sessions.invalidate("feishu:c4")
-    interrupted = loop.sessions.get_or_create("feishu:c4")
+    loop.sessions.invalidate("telegram:c4")
+    interrupted = loop.sessions.get_or_create("telegram:c4")
     assert interrupted.metadata.get(AgentLoop._PENDING_USER_TURN_KEY) is True
     assert interrupted.metadata.get(AgentLoop._RUNTIME_CHECKPOINT_KEY) is not None
 
@@ -528,13 +528,13 @@ async def test_stop_preserves_runtime_checkpoint_for_next_turn(tmp_path: Path) -
 
     loop._run_agent_loop = resumed_run_agent_loop  # type: ignore[method-assign]
     result = await loop._process_message(
-        InboundMessage(channel="feishu", sender_id="u1", chat_id="c4", content="continue here")
+        InboundMessage(channel="telegram", sender_id="u1", chat_id="c4", content="continue here")
     )
 
     assert result is not None
     assert result.content == "next answer"
 
-    session = loop.sessions.get_or_create("feishu:c4")
+    session = loop.sessions.get_or_create("telegram:c4")
     assert [
         {k: v for k, v in m.items() if k in {"role", "content", "tool_call_id", "name"}}
         for m in session.messages
@@ -725,23 +725,23 @@ def test_set_tool_context_passes_thread_session_key_to_spawn(tmp_path: Path) -> 
     loop = _make_full_loop(tmp_path)
 
     loop._set_tool_context(
-        "slack",
+        "discord",
         "C123",
-        metadata={"slack": {"thread_ts": "1700.42", "channel_type": "channel"}},
-        session_key="slack:C123:1700.42",
+        metadata={"discord": {"thread_ts": "1700.42", "channel_type": "channel"}},
+        session_key="discord:C123:1700.42",
     )
 
     spawn_tool = loop.tools.get("spawn")
     assert spawn_tool is not None
-    assert spawn_tool._session_key.get() == "slack:C123:1700.42"
+    assert spawn_tool._session_key.get() == "discord:C123:1700.42"
 
 
 @pytest.mark.asyncio
-async def test_system_subagent_followup_uses_thread_session_and_slack_metadata(tmp_path: Path) -> None:
+async def test_system_subagent_followup_uses_thread_session_and_discord_metadata(tmp_path: Path) -> None:
     loop = _make_full_loop(tmp_path)
     loop.consolidator.maybe_consolidate_by_tokens = AsyncMock(return_value=False)  # type: ignore[method-assign]
 
-    thread_session = loop.sessions.get_or_create("slack:C123:1700.42")
+    thread_session = loop.sessions.get_or_create("discord:C123:1700.42")
     thread_session.add_message("user", "thread question")
     loop.sessions.save(thread_session)
 
@@ -763,19 +763,19 @@ async def test_system_subagent_followup_uses_thread_session_and_slack_metadata(t
         InboundMessage(
             channel="system",
             sender_id="subagent",
-            chat_id="slack:C123",
+            chat_id="discord:C123",
             content="subagent result",
-            session_key_override="slack:C123:1700.42",
+            session_key_override="discord:C123:1700.42",
             metadata={"subagent_task_id": "sub-1"},
         )
     )
 
     assert outbound is not None
-    assert outbound.channel == "slack"
+    assert outbound.channel == "discord"
     assert outbound.chat_id == "C123"
-    assert outbound.metadata == {"slack": {"thread_ts": "1700.42"}}
+    assert outbound.metadata == {"discord": {"thread_ts": "1700.42"}}
     assert "thread question" in seen["initial_messages"][1]["content"]
 
-    loop.sessions.invalidate("slack:C123:1700.42")
-    persisted = loop.sessions.get_or_create("slack:C123:1700.42")
+    loop.sessions.invalidate("discord:C123:1700.42")
+    persisted = loop.sessions.get_or_create("discord:C123:1700.42")
     assert any(m.get("subagent_task_id") == "sub-1" for m in persisted.messages)

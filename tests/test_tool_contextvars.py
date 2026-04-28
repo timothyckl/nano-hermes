@@ -23,7 +23,7 @@ async def test_message_tool_keeps_task_local_context() -> None:
     tool = MessageTool(send_callback=send_callback)
 
     async def task_one() -> str:
-        tool.set_context("feishu", "chat-a")
+        tool.set_context("telegram", "chat-a")
         entered.set()
         await release.wait()
         return await tool.execute(content="one")
@@ -36,9 +36,9 @@ async def test_message_tool_keeps_task_local_context() -> None:
 
     result_one, result_two = await asyncio.gather(task_one(), task_two())
 
-    assert result_one == "Message sent to feishu:chat-a"
+    assert result_one == "Message sent to telegram:chat-a"
     assert result_two == "Message sent to email:chat-b"
-    assert ("feishu", "chat-a", "one") in seen
+    assert ("telegram", "chat-a", "one") in seen
     assert ("email", "chat-b", "two") in seen
 
 
@@ -56,7 +56,7 @@ async def test_spawn_tool_keeps_task_local_context() -> None:
     tool = SpawnTool(_Manager())
 
     async def task_one() -> str:
-        tool.set_context("whatsapp", "chat-a")
+        tool.set_context("matrix", "chat-a")
         entered.set()
         await release.wait()
         return await tool.execute(task="one")
@@ -69,9 +69,9 @@ async def test_spawn_tool_keeps_task_local_context() -> None:
 
     result_one, result_two = await asyncio.gather(task_one(), task_two())
 
-    assert result_one == "whatsapp:chat-a:one"
+    assert result_one == "matrix:chat-a:one"
     assert result_two == "telegram:chat-b:two"
-    assert ("whatsapp", "chat-a", "whatsapp:chat-a") in seen
+    assert ("matrix", "chat-a", "matrix:chat-a") in seen
     assert ("telegram", "chat-b", "telegram:chat-b") in seen
 
 
@@ -82,7 +82,7 @@ async def test_cron_tool_keeps_task_local_context(tmp_path) -> None:
     release = asyncio.Event()
 
     async def task_one() -> str:
-        tool.set_context("feishu", "chat-a")
+        tool.set_context("telegram", "chat-a")
         entered.set()
         await release.wait()
         return await tool.execute(action="add", message="first", every_seconds=60)
@@ -99,7 +99,7 @@ async def test_cron_tool_keeps_task_local_context(tmp_path) -> None:
     assert result_two.startswith("Created job")
 
     jobs = tool._cron.list_jobs()
-    assert {job.payload.channel for job in jobs} == {"feishu", "email"}
+    assert {job.payload.channel for job in jobs} == {"telegram", "email"}
     assert {job.payload.to for job in jobs} == {"chat-a", "chat-b"}
 
 
@@ -152,11 +152,11 @@ async def test_spawn_tool_basic_set_context_and_execute() -> None:
             return f"ok: {task}"
 
     tool = SpawnTool(_Manager())
-    tool.set_context("feishu", "chat-abc")
+    tool.set_context("telegram", "chat-abc")
 
     result = await tool.execute(task="do something")
     assert result == "ok: do something"
-    assert seen == [("feishu", "chat-abc", "feishu:chat-abc")]
+    assert seen == [("telegram", "chat-abc", "telegram:chat-abc")]
 
 
 @pytest.mark.asyncio

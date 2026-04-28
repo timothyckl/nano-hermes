@@ -409,10 +409,9 @@ class AgentLoop:
         session_key: str | None = None,
     ) -> None:
         """Update context for all tools that need routing info."""
-        # When the caller threads a thread-scoped session_key (e.g. slack with
-        # reply_in_thread: true), honor it so spawn announces route back to
-        # the originating thread session. Falls back to unified mode or
-        # channel:chat_id for callers that don't have a thread-scoped key.
+        # When the caller threads a scoped session_key, honor it so spawn
+        # announces route back to the originating session. Falls back to
+        # unified mode or channel:chat_id for callers without a scoped key.
         if session_key is not None:
             effective_key = session_key
         elif self._unified_session:
@@ -627,7 +626,7 @@ class AgentLoop:
         self._last_usage = result.usage
         if result.stop_reason == "max_iterations":
             logger.warning("Max iterations ({}) reached", self.max_iterations)
-            # Push final content through stream so streaming channels (e.g. Feishu)
+            # Push final content through stream so streaming channels (e.g. Telegram)
             # update the card instead of leaving it empty.
             if on_stream and on_stream_end:
                 await on_stream(result.final_content or "")
@@ -924,20 +923,12 @@ class AgentLoop:
                 options,
                 channel,
             )
-            # Reconstruct channel-specific metadata from session.key so the
-            # outbound reply lands in the originating thread (not the channel
-            # top-level). The announce InboundMessage carries only
-            # injected_event metadata; we recover thread_ts from the session
-            # key, which slack writes as "slack:<chat_id>:<thread_ts>".
-            outbound_metadata: dict[str, Any] = {}
-            if channel == "slack" and key.startswith("slack:") and key.count(":") >= 2:
-                outbound_metadata["slack"] = {"thread_ts": key.split(":", 2)[2]}
             return OutboundMessage(
                 channel=channel,
                 chat_id=chat_id,
                 content=content,
                 buttons=buttons,
-                metadata=outbound_metadata,
+                metadata={},
             )
 
         # Extract document text from media at the processing boundary so all

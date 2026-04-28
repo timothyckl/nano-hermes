@@ -19,11 +19,11 @@ def test_set_and_consume_restart_notice_env_roundtrip(monkeypatch):
     monkeypatch.delenv("NANOBOT_RESTART_NOTIFY_METADATA", raising=False)
     monkeypatch.delenv("NANOBOT_RESTART_STARTED_AT", raising=False)
 
-    set_restart_notice_to_env(channel="feishu", chat_id="oc_123")
+    set_restart_notice_to_env(channel="telegram", chat_id="oc_123")
 
     notice = consume_restart_notice_from_env()
     assert notice is not None
-    assert notice.channel == "feishu"
+    assert notice.channel == "telegram"
     assert notice.chat_id == "oc_123"
     assert notice.started_at_raw
     assert notice.metadata == {}
@@ -43,15 +43,15 @@ def test_restart_notice_preserves_metadata_across_env(monkeypatch):
     monkeypatch.delenv("NANOBOT_RESTART_STARTED_AT", raising=False)
 
     set_restart_notice_to_env(
-        channel="slack",
+        channel="discord",
         chat_id="C123",
-        metadata={"slack": {"thread_ts": "1700.42", "channel_type": "channel"}},
+        metadata={"discord": {"thread_ts": "1700.42", "channel_type": "channel"}},
     )
 
     notice = consume_restart_notice_from_env()
     assert notice is not None
     assert notice.metadata == {
-        "slack": {"thread_ts": "1700.42", "channel_type": "channel"}
+        "discord": {"thread_ts": "1700.42", "channel_type": "channel"}
     }
     assert "NANOBOT_RESTART_NOTIFY_METADATA" not in os.environ
 
@@ -73,6 +73,6 @@ def test_should_show_cli_restart_notice():
     assert should_show_cli_restart_notice(notice, "cli:other") is False
     assert should_show_cli_restart_notice(notice, "direct") is True
 
-    non_cli = RestartNotice(channel="feishu", chat_id="oc_1", started_at_raw="100")
+    non_cli = RestartNotice(channel="telegram", chat_id="oc_1", started_at_raw="100")
     assert should_show_cli_restart_notice(non_cli, "cli:direct") is False
 

@@ -385,8 +385,8 @@ def test_add_job_empty_message_returns_actionable_error(tmp_path) -> None:
 def test_add_job_captures_metadata_and_session_key(tmp_path) -> None:
     """CronTool stores channel metadata and session_key when adding a job."""
     tool = _make_tool(tmp_path)
-    meta = {"slack": {"thread_ts": "111.222", "channel_type": "channel"}}
-    tool.set_context("slack", "C99", metadata=meta, session_key="slack:C99:111.222")
+    meta = {"discord": {"thread_ts": "111.222", "channel_type": "channel"}}
+    tool.set_context("discord", "C99", metadata=meta, session_key="discord:C99:111.222")
 
     result = tool._add_job("test", "say hi", 60, None, None, None)
     assert "Created job" in result
@@ -394,7 +394,7 @@ def test_add_job_captures_metadata_and_session_key(tmp_path) -> None:
     jobs = tool._cron.list_jobs()
     assert len(jobs) == 1
     assert jobs[0].payload.channel_meta == meta
-    assert jobs[0].payload.session_key == "slack:C99:111.222"
+    assert jobs[0].payload.session_key == "discord:C99:111.222"
 
 
 def test_list_excludes_disabled_jobs(tmp_path) -> None:
