@@ -1,6 +1,6 @@
 # 🪽 Nano Hermes
 
-A lightweight, extensible personal AI assistant framework designed for speed, privacy, and flexibility.
+A lightweight, personal AI assistant that learns and evolves through interaction, designed for speed, privacy, and flexibility.
 
 Nano Hermes provides a robust Python agent runtime that can be deployed across multiple chat channels, equipped with memory, long-running background subagents, and a rich set of built-in tools.
 

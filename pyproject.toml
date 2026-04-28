@@ -1,7 +1,7 @@
 [project]
 name = "nano-hermes"
 version = "0.1.5.post2"
-description = "A minimal personal AI assistant"
+description = "A personal AI assistant that learns and evolves through interaction"
 readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.11"
 license = {text = "MIT"}
