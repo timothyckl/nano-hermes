@@ -4,7 +4,7 @@ import shlex
 
 import pytest
 
-from nanobot.agent.tools.sandbox import wrap_command
+from nano_hermes.agent.tools.sandbox import wrap_command
 
 
 def _parse(cmd: str) -> list[str]:
@@ -97,7 +97,7 @@ class TestBwrapBackend:
         fake_media = tmp_path / "media"
         fake_media.mkdir()
         monkeypatch.setattr(
-            "nanobot.agent.tools.sandbox.get_media_dir",
+            "nano_hermes.agent.tools.sandbox.get_media_dir",
             lambda: fake_media,
         )
         ws = str(tmp_path / "project")

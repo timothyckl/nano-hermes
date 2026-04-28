@@ -3,9 +3,9 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from nanobot.agent.loop import AgentLoop
-from nanobot.bus.queue import MessageBus
-from nanobot.providers.base import LLMResponse, ToolCallRequest
+from nano_hermes.agent.loop import AgentLoop
+from nano_hermes.bus.queue import MessageBus
+from nano_hermes.providers.base import LLMResponse, ToolCallRequest
 
 
 class _ContextRecordingTool:

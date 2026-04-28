@@ -7,12 +7,12 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
-from nanobot.agent.loop import AgentLoop
-from nanobot.bus.events import InboundMessage
-from nanobot.bus.queue import MessageBus
-from nanobot.config.schema import AgentDefaults
-from nanobot.command import CommandContext
-from nanobot.providers.base import LLMResponse
+from nano_hermes.agent.loop import AgentLoop
+from nano_hermes.bus.events import InboundMessage
+from nano_hermes.bus.queue import MessageBus
+from nano_hermes.config.schema import AgentDefaults
+from nano_hermes.command import CommandContext
+from nano_hermes.providers.base import LLMResponse
 
 
 def _make_loop(
@@ -77,7 +77,7 @@ class TestSessionTTLConfig:
 
     def test_session_history_and_file_cap_are_internal_constants(self):
         """Session history/file cap should be internal constants, not config fields."""
-        from nanobot.session.manager import HISTORY_MAX_MESSAGES, FILE_MAX_MESSAGES
+        from nano_hermes.session.manager import HISTORY_MAX_MESSAGES, FILE_MAX_MESSAGES
         assert HISTORY_MAX_MESSAGES == 120
         assert FILE_MAX_MESSAGES == 2000
 
@@ -133,11 +133,11 @@ class TestAgentLoopTTLParam:
             await loop._process_message(msg)
 
         session = loop.sessions.get_or_create("cli:direct")
-        from nanobot.session.manager import FILE_MAX_MESSAGES
+        from nano_hermes.session.manager import FILE_MAX_MESSAGES
         assert len(session.messages) <= FILE_MAX_MESSAGES
 
     def test_session_enforce_file_cap_skips_archive_when_dropped_prefix_already_consolidated(self, tmp_path):
-        from nanobot.session.manager import Session
+        from nano_hermes.session.manager import Session
         archive_fn = MagicMock()
         session = Session(key="cli:direct")
         for i in range(8):
@@ -150,7 +150,7 @@ class TestAgentLoopTTLParam:
         archive_fn.assert_not_called()
 
     def test_session_enforce_file_cap_archives_only_unconsolidated_dropped_prefix(self, tmp_path):
-        from nanobot.session.manager import Session
+        from nano_hermes.session.manager import Session
         archive_fn = MagicMock()
         session = Session(key="cli:direct")
         for i in range(8):

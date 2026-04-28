@@ -5,7 +5,7 @@ from datetime import datetime
 
 import pytest
 
-from nanobot.agent.memory import MemoryStore, _HISTORY_ENTRY_HARD_CAP
+from nano_hermes.agent.memory import MemoryStore, _HISTORY_ENTRY_HARD_CAP
 
 
 @pytest.fixture

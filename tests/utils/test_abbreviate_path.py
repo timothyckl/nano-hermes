@@ -1,7 +1,7 @@
 """Tests for abbreviate_path utility."""
 
 import os
-from nanobot.utils.path import abbreviate_path
+from nano_hermes.utils.path import abbreviate_path
 
 
 class TestAbbreviatePathShort:

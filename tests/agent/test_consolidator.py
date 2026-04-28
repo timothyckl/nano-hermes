@@ -4,7 +4,7 @@ import pytest
 import asyncio
 from unittest.mock import AsyncMock, MagicMock, patch
 
-from nanobot.agent.memory import (
+from nano_hermes.agent.memory import (
     Consolidator,
     MemoryStore,
     _ARCHIVE_SUMMARY_MAX_CHARS,

@@ -3,15 +3,15 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from nanobot.agent.loop import AgentLoop
-from nanobot.agent.runner import AgentRunner, AgentRunSpec
-from nanobot.agent.tools.ask import AskUserInterrupt, AskUserTool
-from nanobot.agent.tools.base import Tool, tool_parameters
-from nanobot.agent.tools.registry import ToolRegistry
-from nanobot.agent.tools.schema import tool_parameters_schema
-from nanobot.bus.events import InboundMessage
-from nanobot.bus.queue import MessageBus
-from nanobot.providers.base import GenerationSettings, LLMResponse, ToolCallRequest
+from nano_hermes.agent.loop import AgentLoop
+from nano_hermes.agent.runner import AgentRunner, AgentRunSpec
+from nano_hermes.agent.tools.ask import AskUserInterrupt, AskUserTool
+from nano_hermes.agent.tools.base import Tool, tool_parameters
+from nano_hermes.agent.tools.registry import ToolRegistry
+from nano_hermes.agent.tools.schema import tool_parameters_schema
+from nano_hermes.bus.events import InboundMessage
+from nano_hermes.bus.queue import MessageBus
+from nano_hermes.providers.base import GenerationSettings, LLMResponse, ToolCallRequest
 
 
 def _make_provider(chat_with_retry):

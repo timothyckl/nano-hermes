@@ -9,13 +9,13 @@ from unittest.mock import AsyncMock, MagicMock
 import pytest
 import pytest_asyncio
 
-from nanobot.api.server import (
+from nano_hermes.api.server import (
     _FileSizeExceeded,
     _parse_json_content,
     _save_base64_data_url,
     create_app,
 )
-from nanobot.utils.document import extract_documents
+from nano_hermes.utils.document import extract_documents
 
 try:
     from aiohttp.test_utils import TestClient, TestServer
@@ -399,7 +399,7 @@ def test_extract_documents_skips_extraction_errors(tmp_path, monkeypatch) -> Non
     bad_file = tmp_path / "broken.docx"
     bad_file.write_text("not a docx", encoding="utf-8")
 
-    import nanobot.utils.document as _doc
+    import nano_hermes.utils.document as _doc
     monkeypatch.setattr(
         _doc, "extract_text",
         lambda _path: "[error: failed to extract DOCX: boom]",

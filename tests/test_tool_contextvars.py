@@ -4,10 +4,10 @@ import asyncio
 
 import pytest
 
-from nanobot.agent.tools.cron import CronTool
-from nanobot.agent.tools.message import MessageTool
-from nanobot.agent.tools.spawn import SpawnTool
-from nanobot.cron.service import CronService
+from nano_hermes.agent.tools.cron import CronTool
+from nano_hermes.agent.tools.message import MessageTool
+from nano_hermes.agent.tools.spawn import SpawnTool
+from nano_hermes.cron.service import CronService
 
 
 @pytest.mark.asyncio

@@ -6,7 +6,7 @@ from pathlib import Path
 
 class LearningInfrastructureTests(unittest.TestCase):
     def test_markdown_memory_provider_contract_and_learning_queue(self):
-        from nanobot.agent.memory_providers.markdown import MarkdownMemoryProvider
+        from nano_hermes.agent.memory_providers.markdown import MarkdownMemoryProvider
 
         with tempfile.TemporaryDirectory() as tmp:
             provider = MarkdownMemoryProvider(Path(tmp))
@@ -23,7 +23,7 @@ class LearningInfrastructureTests(unittest.TestCase):
             self.assertEqual(provider.read_learning_events(status="applied")[0]["reason"], "verified")
 
     def test_sqlite_memory_provider_searches_entries(self):
-        from nanobot.agent.memory_providers.sqlite import SQLiteMemoryProvider
+        from nano_hermes.agent.memory_providers.sqlite import SQLiteMemoryProvider
 
         with tempfile.TemporaryDirectory() as tmp:
             provider = SQLiteMemoryProvider(Path(tmp))
@@ -33,7 +33,7 @@ class LearningInfrastructureTests(unittest.TestCase):
             self.assertIn("scripts/run_tests.sh", results[0]["content"])
 
     def test_session_database_recent_and_search(self):
-        from nanobot.session.database import SessionDatabase
+        from nano_hermes.session.database import SessionDatabase
 
         with tempfile.TemporaryDirectory() as tmp:
             db = SessionDatabase(Path(tmp) / "sessions.db")
@@ -44,8 +44,8 @@ class LearningInfrastructureTests(unittest.TestCase):
             self.assertEqual(results[0]["session_id"], "s1")
 
     def test_skill_index_validation_and_search(self):
-        from nanobot.agent.skill_index import SkillIndex
-        from nanobot.agent.skill_validator import SkillValidator
+        from nano_hermes.agent.skill_index import SkillIndex
+        from nano_hermes.agent.skill_validator import SkillValidator
 
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -62,10 +62,10 @@ class LearningInfrastructureTests(unittest.TestCase):
             self.assertTrue(report.valid, report.errors)
 
     def test_tools_manage_memory_skills_and_sessions(self):
-        from nanobot.agent.tools.memory import MemoryTool
-        from nanobot.agent.tools.session_search import SessionSearchTool
-        from nanobot.agent.tools.skills import SkillsTool
-        from nanobot.session.database import SessionDatabase
+        from nano_hermes.agent.tools.memory import MemoryTool
+        from nano_hermes.agent.tools.session_search import SessionSearchTool
+        from nano_hermes.agent.tools.skills import SkillsTool
+        from nano_hermes.session.database import SessionDatabase
 
         async def run_case():
             with tempfile.TemporaryDirectory() as tmp:
@@ -91,7 +91,7 @@ class LearningInfrastructureTests(unittest.TestCase):
         asyncio.run(run_case())
 
     def test_context_includes_enforcement_policies(self):
-        from nanobot.agent.context import ContextBuilder
+        from nano_hermes.agent.context import ContextBuilder
 
         with tempfile.TemporaryDirectory() as tmp:
             prompt = ContextBuilder(Path(tmp)).build_system_prompt()

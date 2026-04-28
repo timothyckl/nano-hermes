@@ -4,9 +4,9 @@ from datetime import datetime, timezone
 
 import pytest
 
-from nanobot.agent.tools.cron import CronTool
-from nanobot.cron.service import CronService
-from nanobot.cron.types import CronJob, CronJobState, CronPayload, CronSchedule
+from nano_hermes.agent.tools.cron import CronTool
+from nano_hermes.cron.service import CronService
+from nano_hermes.cron.types import CronJob, CronJobState, CronPayload, CronSchedule
 
 
 def _make_tool(tmp_path) -> CronTool:

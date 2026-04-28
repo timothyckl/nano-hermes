@@ -10,10 +10,10 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
-from nanobot.agent.loop import AgentLoop
-from nanobot.agent.subagent import SubagentManager, SubagentStatus
-from nanobot.agent.tools.search import GlobTool, GrepTool
-from nanobot.bus.queue import MessageBus
+from nano_hermes.agent.loop import AgentLoop
+from nano_hermes.agent.subagent import SubagentManager, SubagentStatus
+from nano_hermes.agent.tools.search import GlobTool, GrepTool
+from nano_hermes.bus.queue import MessageBus
 
 
 @pytest.mark.asyncio

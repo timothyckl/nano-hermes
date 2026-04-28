@@ -5,12 +5,12 @@ from __future__ import annotations
 import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
 
-from nanobot.utils.searchusage import (
+from nano_hermes.utils.searchusage import (
     SearchUsageInfo,
     _parse_tavily_usage,
     fetch_search_usage,
 )
-from nanobot.utils.helpers import build_status_content
+from nano_hermes.utils.helpers import build_status_content
 
 
 # ---------------------------------------------------------------------------

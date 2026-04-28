@@ -13,8 +13,8 @@ import time
 
 import pytest
 
-from nanobot.agent.tools.filesystem import EditFileTool, ReadFileTool, _find_match
-from nanobot.agent.tools import file_state
+from nano_hermes.agent.tools.filesystem import EditFileTool, ReadFileTool, _find_match
+from nano_hermes.agent.tools import file_state
 
 
 @pytest.fixture(autouse=True)

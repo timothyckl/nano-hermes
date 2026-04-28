@@ -2,9 +2,9 @@ import os
 
 import pytest
 
-from nanobot.agent.tools.message import MessageTool
-from nanobot.bus.events import OutboundMessage
-from nanobot.config.paths import get_workspace_path
+from nano_hermes.agent.tools.message import MessageTool
+from nano_hermes.bus.events import OutboundMessage
+from nano_hermes.config.paths import get_workspace_path
 
 
 @pytest.mark.asyncio

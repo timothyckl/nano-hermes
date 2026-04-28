@@ -4,8 +4,8 @@ from unittest.mock import AsyncMock, MagicMock, call, patch
 import pytest
 from prompt_toolkit.formatted_text import HTML
 
-from nanobot.cli import commands
-from nanobot.cli import stream as stream_mod
+from nano_hermes.cli import commands
+from nano_hermes.cli import stream as stream_mod
 
 
 @pytest.fixture
@@ -13,8 +13,8 @@ def mock_prompt_session():
     """Mock the global prompt session."""
     mock_session = MagicMock()
     mock_session.prompt_async = AsyncMock()
-    with patch("nanobot.cli.commands._PROMPT_SESSION", mock_session), \
-         patch("nanobot.cli.commands.patch_stdout"):
+    with patch("nano_hermes.cli.commands._PROMPT_SESSION", mock_session), \
+         patch("nano_hermes.cli.commands.patch_stdout"):
         yield mock_session
 
 
@@ -45,8 +45,8 @@ def test_init_prompt_session_creates_session():
     # Ensure global is None before test
     commands._PROMPT_SESSION = None
     
-    with patch("nanobot.cli.commands.PromptSession") as MockSession, \
-         patch("nanobot.cli.commands.FileHistory") as MockHistory, \
+    with patch("nano_hermes.cli.commands.PromptSession") as MockSession, \
+         patch("nano_hermes.cli.commands.FileHistory") as MockHistory, \
          patch("pathlib.Path.home") as mock_home:
         
         mock_home.return_value = MagicMock()
@@ -109,7 +109,7 @@ async def test_print_interactive_progress_line_pauses_spinner_before_printing():
     async def fake_print(_text: str) -> None:
         order.append("print")
 
-    with patch("nanobot.cli.commands._print_interactive_line", side_effect=fake_print):
+    with patch("nano_hermes.cli.commands._print_interactive_line", side_effect=fake_print):
         thinking = stream_mod.ThinkingSpinner(console=mock_console)
         with thinking:
             await commands._print_interactive_progress_line("tool running", thinking)

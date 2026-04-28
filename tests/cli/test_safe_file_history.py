@@ -3,7 +3,7 @@
 Surrogate characters in CLI input must not crash history file writes.
 """
 
-from nanobot.cli.commands import SafeFileHistory
+from nano_hermes.cli.commands import SafeFileHistory
 
 
 class TestSafeFileHistory:

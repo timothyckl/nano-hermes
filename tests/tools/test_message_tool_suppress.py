@@ -6,11 +6,11 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
-from nanobot.agent.loop import AgentLoop
-from nanobot.agent.tools.message import MessageTool
-from nanobot.bus.events import InboundMessage, OutboundMessage
-from nanobot.bus.queue import MessageBus
-from nanobot.providers.base import LLMResponse, ToolCallRequest
+from nano_hermes.agent.loop import AgentLoop
+from nano_hermes.agent.tools.message import MessageTool
+from nano_hermes.bus.events import InboundMessage, OutboundMessage
+from nano_hermes.bus.queue import MessageBus
+from nano_hermes.providers.base import LLMResponse, ToolCallRequest
 
 
 def _make_loop(tmp_path: Path) -> AgentLoop:
