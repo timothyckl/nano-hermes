@@ -55,7 +55,7 @@ All options are also available as environment variables with the prefix `NANOHER
 | `maxIterations` | `15` | Max Phase 2 tool calls before the run is cut short. |
 | `annotateLineAges` | `true` | Annotate `MEMORY.md` lines with `git blame` ages. Disable if not in a git repo. |
 
-To trigger Dream manually from a session, run `/dream`.
+Dream can use a separate model from the main agent via `modelOverride`, useful for routing consolidation to a cheaper model. To trigger Dream manually from a session, run `/dream`.
 
 ---
 
