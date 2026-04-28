@@ -20,12 +20,12 @@ class RunResult:
     messages: list[dict[str, Any]]
 
 
-class Nanobot:
+class NanoHermes:
     """Programmatic facade for running the Nano Hermes agent.
 
     Usage::
 
-        bot = Nanobot.from_config()
+        bot = NanoHermes.from_config()
         result = await bot.run("Summarize this repo", hooks=[MyHook()])
         print(result.content)
     """
@@ -39,8 +39,8 @@ class Nanobot:
         config_path: str | Path | None = None,
         *,
         workspace: str | Path | None = None,
-    ) -> Nanobot:
-        """Create a Nanobot instance from a config file.
+    ) -> NanoHermes:
+        """Create a NanoHermes instance from a config file.
 
         Args:
             config_path: Path to ``config.json``.  Defaults to

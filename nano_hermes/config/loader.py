@@ -10,7 +10,7 @@ import pydantic
 from loguru import logger
 from pydantic import BaseModel
 
-from nano_hermes.branding import APP_DIR_NAME
+from nano_hermes import APP_DIR_NAME
 from nano_hermes.config.schema import Config
 
 # Global variable to store current config path (for multi-instance support)

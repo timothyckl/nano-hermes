@@ -107,12 +107,18 @@ class SubagentManager:
         label: str | None = None,
         origin_channel: str = "cli",
         origin_chat_id: str = "direct",
+        origin_metadata: dict[str, Any] | None = None,
         session_key: str | None = None,
     ) -> str:
         """Spawn a subagent to execute a task in the background."""
         task_id = str(uuid.uuid4())[:8]
         display_label = label or task[:30] + ("..." if len(task) > 30 else "")
-        origin = {"channel": origin_channel, "chat_id": origin_chat_id, "session_key": session_key}
+        origin = {
+            "channel": origin_channel,
+            "chat_id": origin_chat_id,
+            "metadata": origin_metadata or {},
+            "session_key": session_key,
+        }
 
         status = SubagentStatus(
             task_id=task_id,
@@ -258,6 +264,7 @@ class SubagentManager:
             content=announce_content,
             session_key_override=override,
             metadata={
+                **origin.get("metadata", {}),
                 "injected_event": "subagent_result",
                 "subagent_task_id": task_id,
             },

@@ -34,7 +34,7 @@ def load_channel_class(module_name: str) -> type[BaseChannel]:
         obj = getattr(mod, attr)
         if isinstance(obj, type) and issubclass(obj, _Base) and obj is not _Base:
             return obj
-    raise ImportError(f"No BaseChannel subclass in nanobot.channels.{module_name}")
+    raise ImportError(f"No BaseChannel subclass in nanohermes.channels.{module_name}")
 
 
 def discover_plugins() -> dict[str, type[BaseChannel]]:

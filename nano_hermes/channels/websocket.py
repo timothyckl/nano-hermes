@@ -75,7 +75,7 @@ class WebSocketConfig(Base):
       Nano Hermes and shares the asyncio loop, use a thread or async HTTP client for GET—do not call
       blocking ``urllib`` or synchronous ``httpx`` from inside a coroutine.
     - ``token_issue_secret``: If non-empty, token requests must send ``Authorization: Bearer <secret>`` or
-      ``X-Nanobot-Auth: <secret>``.
+      ``X-NanoHermes-Auth: <secret>``.
     - ``websocket_requires_token``: If True, the handshake must include a valid token (static or issued and not expired).
     - Each connection has its own session: a unique ``chat_id`` maps to the agent session internally.
     - ``media`` field in outbound messages contains local filesystem paths; remote clients need a
@@ -376,8 +376,8 @@ def _issue_route_secret_matches(headers: Any, configured_secret: str) -> bool:
     header_token = (
         headers.get("X-Nano-Hermes-Auth")
         or headers.get("x-nano-hermes-auth")
-        or headers.get("X-Nanobot-Auth")
-        or headers.get("x-nanobot-auth")
+        or headers.get("X-NanoHermes-Auth")
+        or headers.get("x-nanohermes-auth")
     )
     if not header_token:
         return False

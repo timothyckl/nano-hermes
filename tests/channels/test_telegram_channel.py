@@ -47,7 +47,7 @@ class _FakeBot:
 
     async def get_me(self):
         self.get_me_calls += 1
-        return SimpleNamespace(id=999, username="nanobot_test")
+        return SimpleNamespace(id=999, username="nanohermes_test")
 
     async def set_my_commands(self, commands) -> None:
         self.commands = commands
@@ -822,8 +822,8 @@ async def test_group_policy_mention_accepts_text_mention_and_caches_bot_identity
     channel._start_typing = lambda _chat_id: None
 
     mention = SimpleNamespace(type="mention", offset=0, length=13)
-    await channel._on_message(_make_telegram_update(text="@nanobot_test hi", entities=[mention]), None)
-    await channel._on_message(_make_telegram_update(text="@nanobot_test again", entities=[mention]), None)
+    await channel._on_message(_make_telegram_update(text="@nanohermes_test hi", entities=[mention]), None)
+    await channel._on_message(_make_telegram_update(text="@nanohermes_test again", entities=[mention]), None)
 
     assert len(handled) == 2
     assert channel._app.bot.get_me_calls == 1
@@ -847,12 +847,12 @@ async def test_group_policy_mention_accepts_caption_mention() -> None:
 
     mention = SimpleNamespace(type="mention", offset=0, length=13)
     await channel._on_message(
-        _make_telegram_update(caption="@nanobot_test photo", caption_entities=[mention]),
+        _make_telegram_update(caption="@nanohermes_test photo", caption_entities=[mention]),
         None,
     )
 
     assert len(handled) == 1
-    assert handled[0]["content"] == "@nanobot_test photo"
+    assert handled[0]["content"] == "@nanohermes_test photo"
 
 
 @pytest.mark.asyncio
@@ -1227,7 +1227,7 @@ async def test_forward_command_preserves_dream_log_args_and_strips_bot_suffix() 
         handled.append(kwargs)
 
     channel._handle_message = capture_handle
-    update = _make_telegram_update(text="/dream-log@nanobot_test deadbeef", reply_to_message=None)
+    update = _make_telegram_update(text="/dream-log@nanohermes_test deadbeef", reply_to_message=None)
 
     await channel._forward_command(update, None)
 
@@ -1248,7 +1248,7 @@ async def test_forward_command_normalizes_telegram_safe_dream_aliases() -> None:
         handled.append(kwargs)
 
     channel._handle_message = capture_handle
-    update = _make_telegram_update(text="/dream_restore@nanobot_test deadbeef", reply_to_message=None)
+    update = _make_telegram_update(text="/dream_restore@nanohermes_test deadbeef", reply_to_message=None)
 
     await channel._forward_command(update, None)
 

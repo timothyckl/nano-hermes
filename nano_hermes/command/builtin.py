@@ -6,8 +6,8 @@ import asyncio
 import os
 import sys
 
-from nanobot import __version__
-from nano_hermes.branding import APP_DISPLAY_NAME, LOGO
+from nano_hermes import __version__
+from nano_hermes import APP_DISPLAY_NAME, LOGO
 from nano_hermes.bus.events import OutboundMessage
 from nano_hermes.command.router import CommandContext, CommandRouter
 from nano_hermes.utils.helpers import build_status_content

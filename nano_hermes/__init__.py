@@ -6,7 +6,12 @@ from importlib.metadata import PackageNotFoundError, version as _pkg_version
 from pathlib import Path
 import tomllib
 
-from nano_hermes.branding import APP_DISPLAY_NAME, APP_NAME, LEGACY_PACKAGE_NAME, LOGO, PACKAGE_NAME
+APP_NAME = "nano-hermes"
+APP_DISPLAY_NAME = "Nano Hermes"
+APP_DIR_NAME = ".nano-hermes"
+PACKAGE_NAME = "nano-hermes"
+REPOSITORY_URL = "https://github.com/timothyckl/nano-hermes"
+LOGO = "🪽"
 
 
 def _read_pyproject_version() -> str | None:
@@ -19,13 +24,11 @@ def _read_pyproject_version() -> str | None:
 
 
 def _resolve_version() -> str:
-    for package_name in (PACKAGE_NAME, LEGACY_PACKAGE_NAME):
-        try:
-            return _pkg_version(package_name)
-        except PackageNotFoundError:
-            continue
-    # Source checkouts often import nano_hermes without installed dist-info.
-    return _read_pyproject_version() or "0.1.5.post2"
+    try:
+        return _pkg_version(PACKAGE_NAME)
+    except PackageNotFoundError:
+        # Source checkouts often import nano_hermes without installed dist-info.
+        return _read_pyproject_version() or "0.1.5.post2"
 
 
 __version__ = _resolve_version()
@@ -33,6 +36,6 @@ __logo__ = LOGO
 __app_name__ = APP_NAME
 __app_display_name__ = APP_DISPLAY_NAME
 
-from nano_hermes.nanobot import Nanobot, RunResult
+from nano_hermes.nano_hermes import NanoHermes, RunResult
 
-__all__ = ["Nanobot", "RunResult"]
+__all__ = ["NanoHermes", "RunResult"]

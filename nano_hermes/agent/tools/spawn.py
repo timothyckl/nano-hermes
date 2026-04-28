@@ -24,12 +24,14 @@ class SpawnTool(Tool):
         self._manager = manager
         self._origin_channel: ContextVar[str] = ContextVar("spawn_origin_channel", default="cli")
         self._origin_chat_id: ContextVar[str] = ContextVar("spawn_origin_chat_id", default="direct")
+        self._origin_metadata: ContextVar[dict[str, Any]] = ContextVar("spawn_origin_metadata", default={})
         self._session_key: ContextVar[str] = ContextVar("spawn_session_key", default="cli:direct")
 
-    def set_context(self, channel: str, chat_id: str, effective_key: str | None = None) -> None:
+    def set_context(self, channel: str, chat_id: str, metadata: dict[str, Any] | None = None, effective_key: str | None = None) -> None:
         """Set the origin context for subagent announcements."""
         self._origin_channel.set(channel)
         self._origin_chat_id.set(chat_id)
+        self._origin_metadata.set(metadata or {})
         self._session_key.set(effective_key or f"{channel}:{chat_id}")
 
     @property
@@ -53,5 +55,6 @@ class SpawnTool(Tool):
             label=label,
             origin_channel=self._origin_channel.get(),
             origin_chat_id=self._origin_chat_id.get(),
+            origin_metadata=self._origin_metadata.get(),
             session_key=self._session_key.get(),
         )

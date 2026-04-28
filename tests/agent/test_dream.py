@@ -289,7 +289,7 @@ class TestDreamPromptCaps:
         must not explode the Phase 1 prompt — each entry is capped in the
         preview, even though the JSONL record itself stays full-size."""
         # Bypass the append_history cap by writing directly, simulating a
-        # record that was written by an older nanobot build before any caps.
+        # record that was written by an older nanohermes build before any caps.
         store.history_file.write_text(
             json.dumps({
                 "cursor": 1,

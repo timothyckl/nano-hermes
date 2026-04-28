@@ -4,7 +4,7 @@ When /stop cancels an active task, the runtime checkpoint (tool results,
 assistant messages accumulated so far) should be materialized into session
 history rather than silently discarded.
 
-Derived from upstream issue: https://github.com/HKUDS/nanobot/issues/2966
+Derived from upstream issue: https://github.com/HKUDS/nano_hermes/issues/2966
 """
 
 from __future__ import annotations

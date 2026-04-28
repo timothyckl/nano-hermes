@@ -1,6 +1,6 @@
 """Shared helpers for decoding ``data:...;base64,...`` URLs to disk.
 
-Historically lived in ``nanobot.api.server``; now shared by the WebSocket
+Historically lived in ``nanohermes.api.server``; now shared by the WebSocket
 channel so the ``api`` + ``websocket`` ingress paths apply the same parsing,
 size guard, and filesystem layout.
 """

@@ -9,7 +9,7 @@ import uuid
 from datetime import datetime
 from pathlib import Path
 
-from nano_hermes.branding import APP_DISPLAY_NAME, APP_NAME, LOGO
+from nano_hermes import APP_DISPLAY_NAME, APP_NAME, LOGO
 from typing import Any
 
 import tiktoken

@@ -15,7 +15,7 @@ from typing import Any
 from aiohttp import web
 from loguru import logger
 
-from nano_hermes.branding import APP_NAME
+from nano_hermes import APP_NAME
 from nano_hermes.config.paths import get_media_dir
 from nano_hermes.utils.helpers import safe_filename
 from nano_hermes.utils.media_decode import (

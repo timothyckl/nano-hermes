@@ -1,4 +1,4 @@
-"""Tests for nanobot.agent.tools.sandbox."""
+"""Tests for nanohermes.agent.tools.sandbox."""
 
 import shlex
 

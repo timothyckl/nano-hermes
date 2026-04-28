@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from nano_hermes.branding import APP_DIR_NAME
+from nano_hermes import APP_DIR_NAME
 from nano_hermes.config.loader import get_config_path
 from nano_hermes.utils.helpers import ensure_dir
 

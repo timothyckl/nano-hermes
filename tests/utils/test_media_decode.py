@@ -1,4 +1,4 @@
-"""Tests for ``nanobot.utils.media_decode``."""
+"""Tests for ``nanohermes.utils.media_decode``."""
 
 from __future__ import annotations
 
@@ -67,7 +67,7 @@ def test_saved_file_lives_under_media_dir(tmp_path) -> None:
 
 def test_legacy_symbols_reexported_from_api_server() -> None:
     """Existing tests import ``_save_base64_data_url`` / ``_FileSizeExceeded``
-    from ``nanobot.api.server`` — keep the aliases working."""
+    from ``nanohermes.api.server`` — keep the aliases working."""
     from nano_hermes.api import server
 
     assert server._save_base64_data_url is save_base64_data_url

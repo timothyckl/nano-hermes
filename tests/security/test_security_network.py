@@ -1,4 +1,4 @@
-"""Tests for nanobot.security.network — SSRF protection and internal URL detection."""
+"""Tests for nanohermes.security.network — SSRF protection and internal URL detection."""
 
 from __future__ import annotations
 

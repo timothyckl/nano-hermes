@@ -14,7 +14,7 @@ from rich.live import Live
 from rich.markdown import Markdown
 from rich.text import Text
 
-from nanobot import __app_display_name__, __logo__
+from nano_hermes import __app_display_name__, __logo__
 
 
 def _make_console() -> Console:

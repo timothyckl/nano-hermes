@@ -766,14 +766,20 @@ async def test_system_subagent_followup_uses_thread_session_and_discord_metadata
             chat_id="discord:C123",
             content="subagent result",
             session_key_override="discord:C123:1700.42",
-            metadata={"subagent_task_id": "sub-1"},
+            metadata={
+                "subagent_task_id": "sub-1",
+                "discord": {"thread_ts": "1700.42"},
+            },
         )
     )
 
     assert outbound is not None
     assert outbound.channel == "discord"
     assert outbound.chat_id == "C123"
-    assert outbound.metadata == {"discord": {"thread_ts": "1700.42"}}
+    assert outbound.metadata == {
+        "subagent_task_id": "sub-1",
+        "discord": {"thread_ts": "1700.42"},
+    }
     assert "thread question" in seen["initial_messages"][1]["content"]
 
     loop.sessions.invalidate("discord:C123:1700.42")

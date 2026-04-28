@@ -32,8 +32,8 @@ from rich.markdown import Markdown
 from rich.table import Table
 from rich.text import Text
 
-from nanobot import __app_display_name__, __app_name__, __logo__, __version__
-from nano_hermes.branding import PACKAGE_NAME
+from nano_hermes import __app_display_name__, __app_name__, __logo__, __version__
+from nano_hermes import PACKAGE_NAME
 
 
 class SafeFileHistory(FileHistory):

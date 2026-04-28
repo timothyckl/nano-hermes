@@ -61,7 +61,7 @@ class ExecTool(Tool):
             r">\s*/dev/sd",                  # write to disk
             r"\b(shutdown|reboot|poweroff)\b",  # system power
             r":\(\)\s*\{.*\};\s*:",          # fork bomb
-            # Block writes to nanobot internal state files (#2989).
+            # Block writes to nanohermes internal state files (#2989).
             # history.jsonl / .dream_cursor are managed by append_history();
             # direct writes corrupt the cursor format and crash /dream.
             r">>?\s*\S*(?:history\.jsonl|\.dream_cursor)",            # > / >> redirect
@@ -138,8 +138,8 @@ class ExecTool(Tool):
             if _IS_WINDOWS:
                 env["PATH"] = env.get("PATH", "") + os.pathsep + self.path_append
             else:
-                env["NANOBOT_PATH_APPEND"] = self.path_append
-                command = f'export PATH="$PATH{os.pathsep}$NANOBOT_PATH_APPEND"; {command}'
+                env["NANOHERMES_PATH_APPEND"] = self.path_append
+                command = f'export PATH="$PATH{os.pathsep}$NANOHERMES_PATH_APPEND"; {command}'
 
         try:
             process = await self._spawn(command, cwd, env)

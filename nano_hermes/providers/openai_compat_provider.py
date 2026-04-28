@@ -31,7 +31,7 @@ else:
         )
     from openai import AsyncOpenAI
 
-from nano_hermes.branding import APP_DISPLAY_NAME, REPOSITORY_URL
+from nano_hermes import APP_DISPLAY_NAME, REPOSITORY_URL
 from nano_hermes.providers.base import LLMProvider, LLMResponse, ToolCallRequest
 from nano_hermes.providers.openai_responses import (
     consume_sdk_stream,
@@ -94,7 +94,7 @@ def _is_kimi_thinking_model(model_name: str) -> bool:
 
 def _openai_compat_timeout_s() -> float:
     """Return the bounded request timeout used for OpenAI-compatible providers."""
-    return _float_env("NANOBOT_OPENAI_COMPAT_TIMEOUT_S", _OPENAI_COMPAT_REQUEST_TIMEOUT_S)
+    return _float_env("NANOHERMES_OPENAI_COMPAT_TIMEOUT_S", _OPENAI_COMPAT_REQUEST_TIMEOUT_S)
 
 
 def _float_env(name: str, default: float) -> float:
@@ -174,7 +174,7 @@ def _extract_tc_extras(tc: Any) -> tuple[
 
 
 def _uses_openrouter_attribution(spec: "ProviderSpec | None", api_base: str | None) -> bool:
-    """Apply Nanobot attribution headers to OpenRouter requests by default."""
+    """Apply NanoHermes attribution headers to OpenRouter requests by default."""
     if spec and spec.name == "openrouter":
         return True
     return bool(api_base and "openrouter" in api_base.lower())
@@ -1178,7 +1178,7 @@ class OpenAICompatProvider(LLMProvider):
         tool_choice: str | dict[str, Any] | None = None,
         on_content_delta: Callable[[str], Awaitable[None]] | None = None,
     ) -> LLMResponse:
-        idle_timeout_s = int(os.environ.get("NANOBOT_STREAM_IDLE_TIMEOUT_S", "90"))
+        idle_timeout_s = int(os.environ.get("NANOHERMES_STREAM_IDLE_TIMEOUT_S", "90"))
         try:
             if self._should_use_responses_api(model, reasoning_effort):
                 try:

@@ -274,8 +274,8 @@ class AgentLoop:
         # When a session has an active task, new messages for that session
         # are routed here instead of creating a new task.
         self._pending_queues: dict[str, asyncio.Queue] = {}
-        # NANOBOT_MAX_CONCURRENT_REQUESTS: <=0 means unlimited; default 3.
-        _max = int(os.environ.get("NANOBOT_MAX_CONCURRENT_REQUESTS", "3"))
+        # NANOHERMES_MAX_CONCURRENT_REQUESTS: <=0 means unlimited; default 3.
+        _max = int(os.environ.get("NANOHERMES_MAX_CONCURRENT_REQUESTS", "3"))
         self._concurrency_gate: asyncio.Semaphore | None = (
             asyncio.Semaphore(_max) if _max > 0 else None
         )
@@ -422,7 +422,7 @@ class AgentLoop:
             if tool := self.tools.get(name):
                 if hasattr(tool, "set_context"):
                     if name == "spawn":
-                        tool.set_context(channel, chat_id, effective_key=effective_key)
+                        tool.set_context(channel, chat_id, metadata=metadata, effective_key=effective_key)
                     elif name == "cron":
                         tool.set_context(channel, chat_id, metadata=metadata, session_key=session_key)
                     elif name == "message":
@@ -928,7 +928,7 @@ class AgentLoop:
                 chat_id=chat_id,
                 content=content,
                 buttons=buttons,
-                metadata={},
+                metadata=msg.metadata,
             )
 
         # Extract document text from media at the processing boundary so all
