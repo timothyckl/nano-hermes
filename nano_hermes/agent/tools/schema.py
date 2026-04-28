@@ -1,10 +1,10 @@
-"""JSON Schema fragment types: all subclass :class:`~nanohermes.agent.tools.base.Schema` for descriptions and constraints on tool parameters.
+"""JSON Schema fragment types: all subclass :class:`~nano_hermes.agent.tools.base.Schema` for descriptions and constraints on tool parameters.
 
-- ``to_json_schema()``: returns a dict compatible with :meth:`~nanohermes.agent.tools.base.Schema.validate_json_schema_value` /
-  :class:`~nanohermes.agent.tools.base.Tool`.
+- ``to_json_schema()``: returns a dict compatible with :meth:`~nano_hermes.agent.tools.base.Schema.validate_json_schema_value` /
+  :class:`~nano_hermes.agent.tools.base.Tool`.
 - ``validate_value(value, path)``: validates a single value against this schema; returns a list of error messages (empty means valid).
 
-Shared validation and fragment normalization are on the class methods of :class:`~nanohermes.agent.tools.base.Schema`.
+Shared validation and fragment normalization are on the class methods of :class:`~nano_hermes.agent.tools.base.Schema`.
 
 Note: Python does not allow subclassing ``bool``, so booleans use :class:`BooleanSchema`.
 """

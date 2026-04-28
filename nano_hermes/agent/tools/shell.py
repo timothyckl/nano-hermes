@@ -61,7 +61,7 @@ class ExecTool(Tool):
             r">\s*/dev/sd",                  # write to disk
             r"\b(shutdown|reboot|poweroff)\b",  # system power
             r":\(\)\s*\{.*\};\s*:",          # fork bomb
-            # Block writes to nanohermes internal state files (#2989).
+            # Block writes to nano_hermes internal state files (#2989).
             # history.jsonl / .dream_cursor are managed by append_history();
             # direct writes corrupt the cursor format and crash /dream.
             r">>?\s*\S*(?:history\.jsonl|\.dream_cursor)",            # > / >> redirect

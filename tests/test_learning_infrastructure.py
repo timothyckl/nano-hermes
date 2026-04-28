@@ -52,7 +52,7 @@ class LearningInfrastructureTests(unittest.TestCase):
             skill_dir = root / "skills" / "github-review"
             skill_dir.mkdir(parents=True)
             (skill_dir / "SKILL.md").write_text(
-                "---\nname: github-review\ndescription: Review GitHub pull requests\nmetadata:\n  nanohermes:\n    tags: [github, review]\n    triggers: [pull request, PR review]\n---\n# GitHub Review\nUse gh pr diff before reviewing.\n",
+                "---\nname: github-review\ndescription: Review GitHub pull requests\nmetadata:\n  nano_hermes:\n    tags: [github, review]\n    triggers: [pull request, PR review]\n---\n# GitHub Review\nUse gh pr diff before reviewing.\n",
                 encoding="utf-8",
             )
             index = SkillIndex(root)

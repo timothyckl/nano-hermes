@@ -2,7 +2,7 @@
 
 Uses ``AsyncOpenAI`` pointed at ``https://{endpoint}/openai/v1/`` which
 routes to the Responses API (``/responses``).  Reuses shared conversion
-helpers from :mod:`nanohermes.providers.openai_responses`.
+helpers from :mod:`nano_hermes.providers.openai_responses`.
 """
 
 from __future__ import annotations

@@ -48,7 +48,7 @@ async def test_brave_search(monkeypatch):
 
     monkeypatch.setattr(httpx.AsyncClient, "get", mock_get)
     tool = _tool(provider="brave", api_key="brave-key")
-    result = await tool.execute(query="nanohermes", count=1)
+    result = await tool.execute(query="nano_hermes", count=1)
     assert "NanoHermes" in result
     assert "https://example.com" in result
 

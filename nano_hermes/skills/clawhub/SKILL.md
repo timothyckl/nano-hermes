@@ -2,7 +2,7 @@
 name: clawhub
 description: Search and install agent skills from ClawHub, the public skill registry.
 homepage: https://clawhub.ai
-metadata: {"nanohermes":{"emoji":"🦞"}}
+metadata: {"nano_hermes":{"emoji":"🦞"}}
 ---
 
 # ClawHub

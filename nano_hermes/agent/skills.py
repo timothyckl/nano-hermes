@@ -183,7 +183,7 @@ class SkillsLoader:
             return {}
         if not isinstance(data, dict):
             return {}
-        payload = data.get("nanohermes", data.get("openclaw", {}))
+        payload = data.get("nano_hermes", data.get("nano_hermes", data.get("openclaw", {})))
         return payload if isinstance(payload, dict) else {}
 
     def _check_requirements(self, skill_meta: dict) -> bool:
@@ -196,7 +196,7 @@ class SkillsLoader:
         )
 
     def _get_skill_meta(self, name: str) -> dict:
-        """Get nanohermes metadata for a skill (cached in frontmatter)."""
+        """Get nano_hermes metadata for a skill (cached in frontmatter)."""
         raw_meta = self.get_skill_metadata(name) or {}
         return self._parse_nanohermes_metadata(raw_meta.get("metadata"))
 

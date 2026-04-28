@@ -903,9 +903,9 @@ class TestRuntimeVarsInspectFallback:
     @pytest.mark.asyncio
     async def test_inspect_runtime_var_string(self):
         tool = _make_tool()
-        await tool.execute(action="set", key="current_project", value="nanohermes")
+        await tool.execute(action="set", key="current_project", value="nano_hermes")
         result = await tool.execute(action="check", key="current_project")
-        assert "nanohermes" in result
+        assert "nano_hermes" in result
 
     @pytest.mark.asyncio
     async def test_inspect_runtime_var_dict(self):

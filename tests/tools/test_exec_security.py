@@ -69,7 +69,7 @@ async def test_exec_blocks_chained_internal_url():
     assert "Error" in result
 
 
-# --- #2989: block writes to nanohermes internal state files -----------------
+# --- #2989: block writes to nano_hermes internal state files -----------------
 
 
 @pytest.mark.parametrize(

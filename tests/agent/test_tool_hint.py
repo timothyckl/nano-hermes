@@ -1,4 +1,4 @@
-"""Tests for tool hint formatting (nanohermes.utils.tool_hints)."""
+"""Tests for tool hint formatting (nano_hermes.utils.tool_hints)."""
 
 from nano_hermes.utils.tool_hints import format_tool_hints
 from nano_hermes.providers.base import ToolCallRequest
@@ -54,7 +54,7 @@ class TestToolHintKnownTools:
 
     def test_exec_abbreviates_paths_in_command(self):
         """Windows paths in exec commands should be folded, not blindly truncated."""
-        cmd = "cd D:\\Documents\\GitHub\\nanohermes\\.worktree\\tomain\\nanohermes && git diff origin/main...pr-2706 --name-only 2>&1"
+        cmd = "cd D:\\Documents\\GitHub\\nanohermes\\.worktree\\tomain\\nano_hermes && git diff origin/main...pr-2706 --name-only 2>&1"
         result = _hint([_tc("exec", {"command": cmd})])
         assert "\u2026/" in result  # path should be folded with …/
         assert "worktree" not in result  # middle segments should be collapsed

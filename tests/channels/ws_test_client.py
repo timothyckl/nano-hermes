@@ -1,4 +1,4 @@
-"""Lightweight WebSocket test client for integration testing the nanohermes WebSocket channel.
+"""Lightweight WebSocket test client for integration testing the nano_hermes WebSocket channel.
 
 Provides an async ``WsTestClient`` class and token-issuance helpers that
 integration tests can import and use directly::

@@ -36,7 +36,7 @@ class SkillIndex:
             except yaml.YAMLError:
                 pass
         raw_metadata = meta.get("metadata", {})
-        nb = raw_metadata.get("nanohermes", {}) if isinstance(raw_metadata, dict) else {}
+        nb = raw_metadata.get("nano_hermes", {}) if isinstance(raw_metadata, dict) else {}
         return {
             "name": str(meta.get("name") or skill_file.parent.name),
             "path": str(skill_file),

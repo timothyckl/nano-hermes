@@ -1,4 +1,4 @@
-"""Tests for nanohermes.agent.skills.SkillsLoader."""
+"""Tests for nano_hermes.agent.skills.SkillsLoader."""
 
 from __future__ import annotations
 
@@ -17,12 +17,12 @@ def _write_skill(
     metadata_json: dict | None = None,
     body: str = "# Skill\n",
 ) -> Path:
-    """Create ``base / name / SKILL.md`` with optional nanohermes metadata JSON."""
+    """Create ``base / name / SKILL.md`` with optional nano_hermes metadata JSON."""
     skill_dir = base / name
     skill_dir.mkdir(parents=True)
     lines = ["---"]
     if metadata_json is not None:
-        payload = json.dumps({"nanohermes": metadata_json}, separators=(",", ":"))
+        payload = json.dumps({"nano_hermes": metadata_json}, separators=(",", ":"))
         lines.append(f'metadata: {payload}')
     lines.extend(["---", "", body])
     path = skill_dir / "SKILL.md"
@@ -165,7 +165,7 @@ def test_list_skills_filter_unavailable_includes_when_bin_requirement_met(
 
     def fake_which(cmd: str) -> str | None:
         if cmd == "nanohermes_test_fake_binary":
-            return "/fake/nanohermes_test_fake_binary"
+            return "/fake/nano_hermes_test_fake_binary"
         return None
 
     monkeypatch.setattr("nano_hermes.agent.skills.shutil.which", fake_which)
@@ -377,7 +377,7 @@ def test_get_skill_metadata_handles_yaml_types(tmp_path: Path) -> None:
     ws_skills.mkdir(parents=True)
     skill_dir = ws_skills / "typed"
     skill_dir.mkdir(parents=True)
-    payload = json.dumps({"nanohermes": {"requires": {"bins": ["gh"]}, "always": True}}, separators=(",", ":"))
+    payload = json.dumps({"nano_hermes": {"requires": {"bins": ["gh"]}, "always": True}}, separators=(",", ":"))
     skill_path = skill_dir / "SKILL.md"
     skill_path.write_text(
         "---\n"

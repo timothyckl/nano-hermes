@@ -372,7 +372,7 @@ async def test_json_base64_image_upload(aiohttp_client, mock_agent, tmp_path) ->
 
 
 # ---------------------------------------------------------------------------
-# extract_documents tests (now in nanohermes.utils.document)
+# extract_documents tests (now in nano_hermes.utils.document)
 # ---------------------------------------------------------------------------
 
 def test_extract_documents_separates_images_from_docs(tmp_path) -> None:

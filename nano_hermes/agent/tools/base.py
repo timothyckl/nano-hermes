@@ -21,7 +21,7 @@ _JSON_TYPE_MAP: dict[str, type | tuple[type, ...]] = {
 class Schema(ABC):
     """Abstract base for JSON Schema fragments describing tool parameters.
 
-    Concrete types live in :mod:`nanohermes.agent.tools.schema`; all implement
+    Concrete types live in :mod:`nano_hermes.agent.tools.schema`; all implement
     :meth:`to_json_schema` and :meth:`validate_value`. Class methods
     :meth:`validate_json_schema_value` and :meth:`fragment` are the shared validation and normalization entry points.
     """

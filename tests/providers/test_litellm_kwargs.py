@@ -146,7 +146,7 @@ def test_openrouter_user_headers_override_default_attribution() -> None:
             api_base="https://openrouter.ai/api/v1",
             default_model="anthropic/claude-sonnet-4-5",
             extra_headers={
-                "HTTP-Referer": "https://nanohermes.ai",
+                "HTTP-Referer": "https://nano_hermes.ai",
                 "X-OpenRouter-Title": "NanoHermes Pro",
                 "X-Custom-App": "enabled",
             },
@@ -154,7 +154,7 @@ def test_openrouter_user_headers_override_default_attribution() -> None:
         )
 
     headers = MockClient.call_args.kwargs["default_headers"]
-    assert headers["HTTP-Referer"] == "https://nanohermes.ai"
+    assert headers["HTTP-Referer"] == "https://nano_hermes.ai"
     assert headers["X-OpenRouter-Title"] == "NanoHermes Pro"
     assert headers["X-OpenRouter-Categories"] == "cli-agent,personal-agent"
     assert headers["X-Custom-App"] == "enabled"
