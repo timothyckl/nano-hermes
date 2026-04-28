@@ -47,7 +47,7 @@ class _FakeBot:
 
     async def get_me(self):
         self.get_me_calls += 1
-        return SimpleNamespace(id=999, username="nanohermes_test")
+        return SimpleNamespace(id=999, username="nano_hermes_test")
 
     async def set_my_commands(self, commands) -> None:
         self.commands = commands
@@ -821,7 +821,7 @@ async def test_group_policy_mention_accepts_text_mention_and_caches_bot_identity
     channel._handle_message = capture_handle
     channel._start_typing = lambda _chat_id: None
 
-    mention = SimpleNamespace(type="mention", offset=0, length=13)
+    mention = SimpleNamespace(type="mention", offset=0, length=17)
     await channel._on_message(_make_telegram_update(text="@nano_hermes_test hi", entities=[mention]), None)
     await channel._on_message(_make_telegram_update(text="@nano_hermes_test again", entities=[mention]), None)
 
@@ -845,7 +845,7 @@ async def test_group_policy_mention_accepts_caption_mention() -> None:
     channel._handle_message = capture_handle
     channel._start_typing = lambda _chat_id: None
 
-    mention = SimpleNamespace(type="mention", offset=0, length=13)
+    mention = SimpleNamespace(type="mention", offset=0, length=17)
     await channel._on_message(
         _make_telegram_update(caption="@nano_hermes_test photo", caption_entities=[mention]),
         None,
