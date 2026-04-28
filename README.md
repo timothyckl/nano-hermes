@@ -1,98 +1,93 @@
-# Nano Hermes
+# 🪽 Nano Hermes
 
-A minimal personal AI assistant.
+A lightweight, extensible personal AI assistant framework designed for speed, privacy, and flexibility.
 
-This repository contains the Python agent runtime, CLI, tests, templates, built-in skills, and a small set of personal channels.
+Nano Hermes provides a robust Python agent runtime that can be deployed across multiple chat channels, equipped with memory, long-running background subagents, and a rich set of built-in tools.
 
-## What is included
+## ✨ Features
 
-- Python package: `nano_hermes/`
-- CLI entry point: `nano-hermes`
-- Agent runtime, memory, tools, sessions, providers, channels, and templates
-- Test suite: `tests/`
-- Packaging metadata: `pyproject.toml`
+- **Multi-Channel**: Native support for Discord, Telegram, Matrix, Email, and WebSockets.
+- **Subagents**: Spawn independent background tasks that report back when complete.
+- **Persistent Memory**: Durable session history and long-term memory management.
+- **Extensible Tools**: Easily add new capabilities (Shell, Web Search, Filesystem, etc.).
+- **Protocol Support**: Built-in Model Context Protocol (MCP) support.
+- **API Server**: OpenAI-compatible API surface for integration with other apps.
 
-## Requirements
+## 🚀 Quick Start
+
+### Requirements
 
 - Python 3.11+
-- An API key for at least one configured model provider
+- An API key for your preferred provider (Anthropic, OpenAI, Azure, etc.)
 
-## Setup
-
-Create and activate a virtual environment outside or inside the repo:
+### Installation
 
 ```bash
+# Clone the repository
+git clone git@github.com:timothyckl/nano-hermes.git
+cd nano-hermes
+
+# Setup virtual environment
 python3 -m venv .venv
 source .venv/bin/activate
+
+# Install with development and API extras
+pip install -e '.[dev,api,discord]'
 ```
 
-Install the project in editable mode with development tools:
+### Configuration
 
-```bash
-python -m pip install -e '.[dev]'
-```
-
-Initialize config and workspace:
+Initialize your workspace and configure your first model:
 
 ```bash
 nano-hermes onboard --wizard
 ```
 
-Or create the default config non-interactively:
+By default, all configuration and runtime data are stored in `~/.nano-hermes`.
+
+## 🛠️ Usage
+
+### CLI Agent
+Interact with your assistant directly in the terminal:
 
 ```bash
-nano-hermes onboard
-```
+# One-off message
+nano-hermes agent -m "Summarize my recent git logs"
 
-By default, user config/runtime data lives under `~/.nano-hermes`.
-
-## Usage
-
-Send a one-off message:
-
-```bash
-nano-hermes agent -m "Hello"
-```
-
-Start an interactive session:
-
-```bash
+# Interactive session
 nano-hermes agent
 ```
 
-Check configuration/status:
+### Serve API
+Run an OpenAI-compatible server:
+
+```bash
+nano-hermes serve
+```
+
+### Status Check
+Verify your configuration and connectivity:
 
 ```bash
 nano-hermes status
 ```
 
-Run the OpenAI-compatible API server, if the `api` extra is installed:
+## 🧪 Development
+
+### Running Tests
+Ensure everything is working correctly:
 
 ```bash
-python -m pip install -e '.[dev,api]'
-nano-hermes serve
+python -m pytest
 ```
 
-## Development
-
-Run the test suite:
-
-```bash
-pytest
-```
-
-Run a focused lint check:
+### Linting
+Maintain code quality:
 
 ```bash
 ruff check nano_hermes
 ```
 
-Build the package:
+## 📄 License
 
-```bash
-python -m build
-```
-
-## License
-
-MIT. See [LICENSE](LICENSE). Third-party notices are retained in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+MIT. See [LICENSE](LICENSE) for details.
